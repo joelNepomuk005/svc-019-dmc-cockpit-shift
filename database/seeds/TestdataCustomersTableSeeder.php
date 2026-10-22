@@ -19,7 +19,7 @@ class TestdataCustomersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->faker = Faker::create('de_DE');
 

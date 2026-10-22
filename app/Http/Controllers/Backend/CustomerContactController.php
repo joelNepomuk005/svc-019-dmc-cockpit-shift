@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\CustomerFilter;
 use App\Http\Filters\UserNameFilter;
@@ -14,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CustomerContactController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $filter = new \Illuminate\Http\Request(
             $request->except(['filter.customSearch', 'filter.trashed'])
@@ -67,7 +69,7 @@ class CustomerContactController extends Controller
 
     }
 
-    public function store(Request $request, Customer $customer)
+    public function store(Request $request, Customer $customer): JsonResponse
     {
         $payload = $request->validate([
             'date' => 'required|date',
@@ -89,7 +91,7 @@ class CustomerContactController extends Controller
 
     }
 
-    public function update(Request $request, Customer $customer, CustomerContact $customerContact)
+    public function update(Request $request, Customer $customer, CustomerContact $customerContact): JsonResponse
     {
         $payload = $request->validate([
             'date' => 'required|date',
@@ -121,7 +123,7 @@ class CustomerContactController extends Controller
 
     }
 
-    public function destroy(Request $request, Customer $customer, CustomerContact $customerContact)
+    public function destroy(Request $request, Customer $customer, CustomerContact $customerContact): JsonResponse
     {
         $customerContact->delete();
 

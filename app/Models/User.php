@@ -57,7 +57,7 @@ class User extends AuthenticatableUser
     /**
      * @param  string  $search
      */
-    public function scopeCustomSearch(Builder $query, $search)
+    public function scopeCustomSearch(Builder $query, string $search)
     {
         $query
             ->where('id', 'LIKE', '%'.$search.'%')

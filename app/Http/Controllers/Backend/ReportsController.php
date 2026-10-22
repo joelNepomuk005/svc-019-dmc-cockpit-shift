@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use App\Exports\AcquisitionExcelExport;
 use App\Exports\ContactExcelExport;
 use App\Exports\CustomerExcelExport;
@@ -37,7 +39,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ReportsController extends Controller
 {
-    public function importProjects(Request $request)
+    public function importProjects(Request $request): RedirectResponse
     {
 
         $payload = $request->validate([
@@ -56,7 +58,7 @@ class ReportsController extends Controller
         return redirect()->route('backend.projects.index');
     }
 
-    public function balance_customer(Request $request)
+    public function balance_customer(Request $request): JsonResponse
     {
         $payload = $request->validate([
             'file' => 'file|mimes:xlsx',

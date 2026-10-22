@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Imports\CustomerToArray;
 use App\Models\Campaign;
@@ -20,7 +23,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CampaignsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $filter = new \Illuminate\Http\Request(
@@ -48,7 +51,7 @@ class CampaignsController extends Controller
         return $response;
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -122,7 +125,7 @@ class CampaignsController extends Controller
 
     }
 
-    public function sendCampaignDataToLandingpage(Campaign $campaign, $campaignParticipants, $type)
+    public function sendCampaignDataToLandingpage(Campaign $campaign, $campaignParticipants, $type): JsonResponse
     {
         Log::info('Started Send Campaign to Landingpage!');
         $bearerToken = env('API_BEARER_TOKEN');
@@ -163,7 +166,7 @@ class CampaignsController extends Controller
         }
     }
 
-    public function edit(Request $request, Campaign $campaign)
+    public function edit(Request $request, Campaign $campaign): View
     {
         $filter = new \Illuminate\Http\Request(
             $request->except(['filter.customSearch', 'filter.trashed'])
@@ -185,7 +188,7 @@ class CampaignsController extends Controller
         return view('backend.campaigns.edit', compact('campaign', 'campaignParticipants', 'campaignParticipantsIds'));
     }
 
-    public function update(Request $request, Campaign $campaign)
+    public function update(Request $request, Campaign $campaign): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -293,7 +296,7 @@ class CampaignsController extends Controller
         return $customer['customer_ids'];
     }
 
-    public function destroy(Request $request, Campaign $campaign)
+    public function destroy(Request $request, Campaign $campaign): JsonResponse
     {
 
         // $this->sendCampaignDataToLandingpage($campaign, null, 'delete');

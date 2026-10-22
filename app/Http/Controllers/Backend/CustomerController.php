@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Sorts\CustomerBudgetSort;
 use App\Imports\CustomerImport;
@@ -15,7 +17,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CustomerController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $filter = new \Illuminate\Http\Request(
@@ -80,7 +82,7 @@ class CustomerController extends Controller
         return view('backend.customers.edit', compact('customer'));
     }
 
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, Customer $customer): RedirectResponse
     {
 
         $payload = $request->validate([
@@ -99,7 +101,7 @@ class CustomerController extends Controller
         return redirect()->route('backend.customers.index', $customer);
     }
 
-    public function delete(Request $request, Customer $customer)
+    public function delete(Request $request, Customer $customer): RedirectResponse
     {
 
         $customer->budgets()->delete();
@@ -115,7 +117,7 @@ class CustomerController extends Controller
         return redirect()->route('backend.customers.index');
     }
 
-    public function updateContactPerson(Request $request, Customer $customer)
+    public function updateContactPerson(Request $request, Customer $customer): RedirectResponse
     {
 
         $payload = $request->validate([
@@ -134,7 +136,7 @@ class CustomerController extends Controller
         return redirect()->route('backend.customers.{customer}.show', $customer);
     }
 
-    public function updateSocialNetwork(Request $request, Customer $customer)
+    public function updateSocialNetwork(Request $request, Customer $customer): RedirectResponse
     {
 
         $payload = $request->validate([
@@ -174,7 +176,7 @@ class CustomerController extends Controller
         return $response;
     }
 
-    public function upload(Request $request)
+    public function upload(Request $request): RedirectResponse
     {
 
         $payload = $request->validate([

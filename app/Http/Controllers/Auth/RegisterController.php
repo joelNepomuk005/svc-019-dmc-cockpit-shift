@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Mail\sendmailNewRegistration;
 use App\Models\Customer;
@@ -29,34 +31,34 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    public function check_blz(Request $request)
+    public function check_blz(Request $request): View
     {
         return view('auth.register.index');
 
     }
 
-    public function verification_success(Request $request)
+    public function verification_success(Request $request): View
     {
 
         return view('auth.register.verification_success');
 
     }
 
-    public function reset_password_success(Request $request)
+    public function reset_password_success(Request $request): View
     {
 
         return view('auth.register.reset_password_success');
 
     }
 
-    public function verification(Request $request)
+    public function verification(Request $request): View
     {
 
         return view('auth.register.verification_email');
 
     }
 
-    public function verification_failed(Request $request)
+    public function verification_failed(Request $request): View
     {
 
         return view('auth.register.create', ['blz' => $request['blz']]);
@@ -85,7 +87,7 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
 
         return Validator::make($data, [
@@ -141,7 +143,7 @@ class RegisterController extends Controller
 
     }
 
-    public function register_user(Request $request)
+    public function register_user(Request $request): RedirectResponse
     {
 
         $request['name'] = $request['first_name'].' '.$request['last_name'];

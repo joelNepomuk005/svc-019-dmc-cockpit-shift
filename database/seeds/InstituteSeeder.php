@@ -13,7 +13,7 @@ class InstituteSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         if (env('APP_ENV') != 'production') {
             CustomerAssociation::create(['name' => 'Deutscher Sparkassen- und Giroverband', 'short_name' => 'DSGV']);

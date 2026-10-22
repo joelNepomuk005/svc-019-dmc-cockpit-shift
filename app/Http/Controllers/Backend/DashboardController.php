@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\CustomerContact;
@@ -25,7 +27,7 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $perPage = request('per_page', 5);
 
@@ -116,7 +118,7 @@ class DashboardController extends Controller
         return view('backend.dashboard.show', compact('customers', 'measures', 'roles', 'customerContacts', 'chartData'));
     }
 
-    public function getContacts(Request $request)
+    public function getContacts(Request $request): JsonResponse
     {
 
         $perPage = $request->numberOfItems;
@@ -137,7 +139,7 @@ class DashboardController extends Controller
         return response()->json($customerContacts);
     }
 
-    public function getMeasures(Request $request)
+    public function getMeasures(Request $request): JsonResponse
     {
 
         $perPage = $request->numberOfItems;

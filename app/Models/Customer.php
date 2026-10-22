@@ -48,7 +48,7 @@ class Customer extends Model
     /**
      * @param  string  $search
      */
-    public function scopeCustomSearch(Builder $query, $search)
+    public function scopeCustomSearch(Builder $query, string $search)
     {
         $query
             ->where('name', 'LIKE', '%'.$search.'%')

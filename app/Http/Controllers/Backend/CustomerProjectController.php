@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\CustomerProjectKeyAccountManagerFilter;
 use App\Http\Sorts\ProjectCustomerBlzSort;
@@ -20,7 +22,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CustomerProjectController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $filter = new \Illuminate\Http\Request(
@@ -176,7 +178,7 @@ class CustomerProjectController extends Controller
 
     }
 
-    public function store(Request $request, Customer $customer)
+    public function store(Request $request, Customer $customer): JsonResponse
     {
 
         $data = Validator::make($request->all(), [
@@ -282,7 +284,7 @@ class CustomerProjectController extends Controller
 
     }
 
-    public function update(Request $request, Customer $customer, CustomerProject $project)
+    public function update(Request $request, Customer $customer, CustomerProject $project): JsonResponse
     {
 
         $data = Validator::make($request->all(), [
@@ -373,7 +375,7 @@ class CustomerProjectController extends Controller
         return $month_year;
     }
 
-    public function product_categories($id)
+    public function product_categories($id): JsonResponse
     {
 
         $categories = ProductCategories::where('product_service_id', $id)->get();
@@ -381,7 +383,7 @@ class CustomerProjectController extends Controller
         return response()->json($categories);
     }
 
-    public function product(Request $request)
+    public function product(Request $request): JsonResponse
     {
 
         $data = $request->all();
@@ -391,7 +393,7 @@ class CustomerProjectController extends Controller
         return response()->json($products);
     }
 
-    public function destroy(Request $request, $project)
+    public function destroy(Request $request, $project): JsonResponse
     {
         $project = CustomerProject::find($project);
         $project->delete();
@@ -403,7 +405,7 @@ class CustomerProjectController extends Controller
         ]);
     }
 
-    public function tabFilterIndex(Request $request, Customer $customer)
+    public function tabFilterIndex(Request $request, Customer $customer): View
     {
 
         $filter = new \Illuminate\Http\Request(

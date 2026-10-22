@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\UserScockpitFilter;
 use App\Mail\sendmail;
@@ -18,7 +21,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $filter = new \Illuminate\Http\Request(
             $request->except(['filter.trashed'])
@@ -80,7 +83,7 @@ class UserController extends Controller
         return $response;
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $data = Validator::make($request->all(), [
             'salutation' => 'required',
@@ -108,7 +111,7 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'type' => 'reload'])->setStatusCode(200);
     }
 
-    public function storeCustomer(Request $request, Customer $customer)
+    public function storeCustomer(Request $request, Customer $customer): JsonResponse
     {
         $data = Validator::make($request->all(), [
             'salutation' => 'required',
@@ -135,7 +138,7 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'type' => 'redirect', 'redirect_url' => route('backend.customers.{customer}.modalTabs', [$customer, 'users'])])->setStatusCode(200);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): JsonResponse
     {
         $data = Validator::make($request->all(), [
             'salutation' => 'required',
@@ -162,7 +165,7 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'type' => 'reload'])->setStatusCode(200);
     }
 
-    public function updateCustomer(Request $request, Customer $customer, User $user)
+    public function updateCustomer(Request $request, Customer $customer, User $user): JsonResponse
     {
         $data = Validator::make($request->all(), [
             'salutation' => 'required',
@@ -213,7 +216,7 @@ class UserController extends Controller
         return $response;
     }
 
-    public function release(Request $request, User $user)
+    public function release(Request $request, User $user): RedirectResponse
     {
 
         $user->verified_at = Carbon::now();
@@ -233,7 +236,7 @@ class UserController extends Controller
         return redirect()->to('/backend/users');
     }
 
-    public function destroy(Request $request, User $user)
+    public function destroy(Request $request, User $user): JsonResponse
     {
         if (empty($user->scockpit_user_id)) {
             $user->delete();
@@ -257,7 +260,7 @@ class UserController extends Controller
         }
     }
 
-    public function impersonate(User $user)
+    public function impersonate(User $user): RedirectResponse
     {
         auth()->user()->impersonate($user);
 
@@ -266,7 +269,7 @@ class UserController extends Controller
         return redirect()->route('backend.dashboard.index');
     }
 
-    public function leaveImpersonate(User $user)
+    public function leaveImpersonate(User $user): RedirectResponse
     {
         auth()->user()->leaveImpersonation();
 
