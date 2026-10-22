@@ -2,22 +2,16 @@
 
 namespace App\Imports;
 
-use App\Http\Controllers\Backend\CustomerController;
 use App\Models\Customer;
 use App\Models\CustomerAssociation;
-use App\Models\CustomerContact;
-
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CustomerImport implements ToCollection, WithHeadingRow, WithCustomCsvSettings
+class CustomerImport implements ToCollection, WithCustomCsvSettings, WithHeadingRow
 {
-
     public function collection(Collection $collection)
     {
         foreach ($collection as $customer) {
@@ -26,7 +20,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, WithCustomCsvSetti
 
             if (empty($customerAssociation)) {
 
-                $customerAssociation =  CustomerAssociation::create([
+                $customerAssociation = CustomerAssociation::create([
                     'name' => $customer['verband'],
                     'short_name' => $customer['verband'],
                 ]);
@@ -36,7 +30,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, WithCustomCsvSetti
 
             if (empty($institute)) {
 
-             $customers['insert'][] =   Customer::create([
+                $customers['insert'][] = Customer::create([
                     'blz' => $customer['blz'],
                     'bic' => $customer['bic'],
                     'name' => $customer['sparkasse'],

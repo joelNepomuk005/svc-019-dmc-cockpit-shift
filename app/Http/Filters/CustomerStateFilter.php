@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Filters;
-
 
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Filters\Filter;
@@ -13,8 +11,7 @@ class CustomerStateFilter implements Filter
     {
 
         return $query->whereHas('measures', function (Builder $query) use ($value) {
-            $query->where('state', $value)
-            ;
+            $query->where('state', $value);
         });
 
     }

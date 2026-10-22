@@ -1,13 +1,9 @@
 <?php
 
-
 namespace App\Http\Sorts;
 
-
-use App\Models\Customer;
 use App\Models\CustomerBudget;
 use Illuminate\Database\Eloquent\Builder;
-
 
 class CustomerBudgetSort implements \Spatie\QueryBuilder\Sorts\Sort
 {
@@ -16,9 +12,8 @@ class CustomerBudgetSort implements \Spatie\QueryBuilder\Sorts\Sort
         $direction = $descending ? 'DESC' : 'ASC';
 
         $query->addSelect(['budget_amount' => CustomerBudget::selectRaw('sum(amount) as budget_amounts')
-            ->whereColumn('customer_id', 'customers.id')
+            ->whereColumn('customer_id', 'customers.id'),
         ])->orderBy('budget_amount', $direction);
-
 
     }
 }

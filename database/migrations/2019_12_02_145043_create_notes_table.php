@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateNotesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class CreateNotesTable extends Migration
             $table->bigIncrements('id');
             $table->text('text');
             $table->unsignedBigInteger('user_id');
-            $table->morphs("noteable");
+            $table->morphs('noteable');
             $table->timestamps();
         });
     }
@@ -31,4 +31,4 @@ class CreateNotesTable extends Migration
     {
         Schema::dropIfExists('notes');
     }
-}
+};

@@ -8,11 +8,10 @@ use Illuminate\Support\Facades\Request;
 
 class ModalController extends Controller
 {
-    public function loadModal (Request $request, User $user) {
+    public function loadModal(Request $request, User $user)
+    {
         return 'hello-world';
     }
 
-    public function renderModal ($data) {
-
-    }
+    public function renderModal($data) {}
 }

@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Console\Commands\SuccessfulRegistered;
 use App\Http\Controllers\Controller;
 use App\Mail\sendmailNewRegistration;
 use App\Models\Customer;
-use App\Models\Institute;
-use App\Models\Point;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Validation\Rules\In;
 
 class RegisterController extends Controller
 {
@@ -36,31 +31,35 @@ class RegisterController extends Controller
 
     public function check_blz(Request $request)
     {
-        return view ('auth.register.index');
+        return view('auth.register.index');
 
     }
 
-    public function verification_success(Request $request) {
+    public function verification_success(Request $request)
+    {
 
-        return view ('auth.register.verification_success');
-
-    }
-
-    public function reset_password_success(Request $request) {
-
-        return view ('auth.register.reset_password_success');
+        return view('auth.register.verification_success');
 
     }
 
-    public function verification(Request $request) {
+    public function reset_password_success(Request $request)
+    {
 
-        return view ('auth.register.verification_email');
+        return view('auth.register.reset_password_success');
 
     }
 
-    public function verification_failed(Request $request) {
+    public function verification(Request $request)
+    {
 
-        return view ('auth.register.create', ['blz' => $request['blz']]);
+        return view('auth.register.verification_email');
+
+    }
+
+    public function verification_failed(Request $request)
+    {
+
+        return view('auth.register.create', ['blz' => $request['blz']]);
 
     }
 
@@ -84,7 +83,6 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -104,28 +102,27 @@ class RegisterController extends Controller
     public function verify_blz(Request $request)
     {
         $payload = $request->validate([
-            "blz" => "required",
+            'blz' => 'required',
         ]);
 
         $customer = Customer::where('blz', $payload['blz'])->exists();
 
-        if($customer) {
-            return view('auth.register.create', ["blz" => $payload['blz']]);
-        }
-        else {
+        if ($customer) {
+            return view('auth.register.create', ['blz' => $payload['blz']]);
+        } else {
             toastr()->error('Die angegebene BLZ konnte nicht zugeordnet werden.');
+
             return redirect()->route('check_blz');
         }
 
     }
 
-
     protected function create(array $data)
     {
 
-       $customer_id = Customer::where('blz', $data['blz'])->value('id');
+        $customer_id = Customer::where('blz', $data['blz'])->value('id');
 
-       $user = User::create([
+        $user = User::create([
             'name' => $data['name'],
             'sex' => $data['sex'],
             'first_name' => $data['first_name'],
@@ -142,16 +139,13 @@ class RegisterController extends Controller
 
         return $user;
 
-
     }
 
     public function register_user(Request $request)
     {
 
-
         $request['name'] = $request['first_name'].' '.$request['last_name'];
         $validator = $this->validator($request->all());
-
 
         if ($validator->fails()) {
 
@@ -163,19 +157,19 @@ class RegisterController extends Controller
 
             $checkIfEmailExists = User::where('email', $request['email'])->exists();
 
-            if($checkIfEmailExists) {
+            if ($checkIfEmailExists) {
 
                 toastr()->error('Die angegebene E-Mailadresse wurde bereist registriert.');
+
                 return redirect()->route('verification_failed', ['blz' => $request['blz']])
                     ->withErrors($validator)
                     ->withInput();
 
-            }
-            else
-            {
-              $this->create($request->all());
-              $this->sendConfirmationEmail();
-              return redirect()->route('verification');
+            } else {
+                $this->create($request->all());
+                $this->sendConfirmationEmail();
+
+                return redirect()->route('verification');
             }
 
         }
@@ -197,7 +191,6 @@ class RegisterController extends Controller
         } catch (\Exception $exception) {
             Log::error($exception);
         }
-
 
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateFilesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -20,9 +20,9 @@ class CreateFilesTable extends Migration
             $table->string('checksum');
             $table->string('path');
             $table->integer('measure_id');
-            $table->string("file_type");
-            $table->boolean("is_promotion_package");
-            $table->boolean("is_measure_image");
+            $table->string('file_type');
+            $table->boolean('is_promotion_package');
+            $table->boolean('is_measure_image');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,4 +37,4 @@ class CreateFilesTable extends Migration
     {
         Schema::dropIfExists('files');
     }
-}
+};

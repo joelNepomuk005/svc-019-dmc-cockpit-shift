@@ -3,11 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\CustomerMeasures;
-use App\Models\CustomerProject;
-use App\Models\Measures;
-use App\Models\Product;
-use Illuminate\Console\Command;
 use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class SetMeasuresToDone extends Command
 {
@@ -42,7 +39,7 @@ class SetMeasuresToDone extends Command
      */
     public function handle()
     {
-        $customerMeasures = CustomerMeasures::where('to','<=', Carbon::now())->get();
+        $customerMeasures = CustomerMeasures::where('to', '<=', Carbon::now())->get();
 
         foreach ($customerMeasures as $customerMeasure) {
 

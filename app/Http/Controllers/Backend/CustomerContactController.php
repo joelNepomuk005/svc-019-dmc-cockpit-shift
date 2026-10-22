@@ -1,26 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Http\Filters;
+
 use App\Http\Controllers\Controller;
-use App\Http\Filters\CustomerContactDepartmentFilter;
-use App\Http\Filters\CustomerContactTypeFilter;
-use App\Http\Filters\CustomerContactWorkingOnFilter;
 use App\Http\Filters\CustomerFilter;
 use App\Http\Filters\UserNameFilter;
-use App\Http\Filters\UserScockpitFilter;
-use App\Http\Sorts\ContactCustomerNameSort;
 use App\Models\Customer;
 use App\Models\CustomerContact;
-use App\Models\CustomerLocation;
-use App\Models\SalesTask;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CustomerContactController extends Controller
@@ -34,15 +23,14 @@ class CustomerContactController extends Controller
         $customerContacts = QueryBuilder::for(CustomerContact::class, $filter)
             ->allowedFilters([
                 'id', 'title', 'date',
-                AllowedFilter::custom('customer', new CustomerFilter()),
-                AllowedFilter::custom('name', new UserNameFilter()),
+                AllowedFilter::custom('customer', new CustomerFilter),
+                AllowedFilter::custom('name', new UserNameFilter),
                 AllowedFilter::scope('date'),
             ])
             ->allowedSorts([
-                'id', 'title', 'date', 'created_at'
+                'id', 'title', 'date', 'created_at',
             ])
             ->orderBy('created_at', 'desc');
-
 
         if (\request('filter.customSearch')) {
             $customerContacts = $customerContacts->customSearch(request('filter.customSearch'));
@@ -66,7 +54,7 @@ class CustomerContactController extends Controller
 
     }
 
-    public function show (Request $request, CustomerContact $customerContact)
+    public function show(Request $request, CustomerContact $customerContact)
     {
         $modal = 'show';
 
@@ -93,7 +81,6 @@ class CustomerContactController extends Controller
         $payload['user_id_log'] = Auth::user()->id;
         $payload['contact_type_id'] = intval($payload['contact_type_id']);
 
-
         CustomerContact::create($payload);
 
         toastr()->success('Der Kontakt wurde erfolgreich angelegt.');
@@ -107,7 +94,7 @@ class CustomerContactController extends Controller
         $payload = $request->validate([
             'date' => 'required|date',
             'title' => 'required',
-            //'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
         ]);
 
         $payload['customer_id'] = $customer->id;
@@ -121,7 +108,7 @@ class CustomerContactController extends Controller
 
     }
 
-    public function edit (Request $request, Customer $customer, CustomerContact $customerContact)
+    public function edit(Request $request, Customer $customer, CustomerContact $customerContact)
     {
         $modal = 'update';
 
@@ -134,7 +121,8 @@ class CustomerContactController extends Controller
 
     }
 
-    public function destroy (Request $request, Customer $customer, CustomerContact $customerContact) {
+    public function destroy(Request $request, Customer $customer, CustomerContact $customerContact)
+    {
         $customerContact->delete();
 
         toastr()->success('Der Kontakt wurde erfolgreich gelöscht.');

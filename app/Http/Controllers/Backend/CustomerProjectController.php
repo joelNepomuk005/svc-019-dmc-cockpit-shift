@@ -3,39 +3,25 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Filters\CustomerKeyAccountManagerFilter;
-use App\Http\Filters\CustomerProductsFilter;
-use App\Http\Filters\CustomerProjectAssociationFilter;
 use App\Http\Filters\CustomerProjectKeyAccountManagerFilter;
-use App\Http\Sorts\AcquisitionCustomerLocationSort;
-use App\Http\Sorts\AcquisitionCustomerNameSort;
 use App\Http\Sorts\ProjectCustomerBlzSort;
 use App\Http\Sorts\ProjectCustomerNameSort;
 use App\Models\Customer;
-use App\Models\CustomerAcquisition;
 use App\Models\CustomerProject;
 use App\Models\File;
 use App\Models\Product;
 use App\Models\ProductCategories;
-use App\Models\SalesTask;
-Use App\Models\ProductService;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
-use function GuzzleHttp\Promise\all;
-
 
 class CustomerProjectController extends Controller
 {
-    public function index (Request $request) {
-
+    public function index(Request $request)
+    {
 
         $filter = new \Illuminate\Http\Request(
             $request->except(['filter.customSearch', 'filter.trashed', 'filter.association', 'filter.product_services', 'filter.product_categories'])
@@ -43,12 +29,12 @@ class CustomerProjectController extends Controller
 
         $filter_array = $filter->toArray();
 
-        if (!is_null($request->input('filter.product_services')) && is_null($request->input('filter.product_categories'))) {
+        if (! is_null($request->input('filter.product_services')) && is_null($request->input('filter.product_categories'))) {
             $filtered_product_categorie = ProductCategories::where('product_service_id', request('filter.product_services'))->pluck('id')->toArray();
             $product_ids = Product::whereIn('category_id', $filtered_product_categorie)->pluck('id')->toArray();
             $filter_array['filter']['product_id'] = $product_ids;
 
-        } else if (!is_null($request->input('filter.product_services')) && !is_null($request->input('filter.product_categories')) && is_null($request->input('filter.product_id'))) {
+        } elseif (! is_null($request->input('filter.product_services')) && ! is_null($request->input('filter.product_categories')) && is_null($request->input('filter.product_id'))) {
 
             $filtered_product_categorie = ProductCategories::where('id', request('filter.product_categories'))->pluck('id')->toArray();
             $product_ids = Product::whereIn('category_id', $filtered_product_categorie)->pluck('id')->toArray();
@@ -58,14 +44,13 @@ class CustomerProjectController extends Controller
 
         $filter->query->add($filter_array);
 
-
         $customerProjects = QueryBuilder::for(CustomerProject::class, $filter)
             ->with(['customer'])->allowedFilters([
                 'id',  'name', 'short_name', 'blz', 'bic', 'location', 'approved_appointment', 'business_data', 'is_customer', 'product_id', 'status',
                 AllowedFilter::exact('type_id'),
                 AllowedFilter::exact('classification_id'),
                 AllowedFilter::exact('customer.association_id'),
-                AllowedFilter::custom('vertrieb_mehrwerte_beratung', new CustomerProjectKeyAccountManagerFilter()),
+                AllowedFilter::custom('vertrieb_mehrwerte_beratung', new CustomerProjectKeyAccountManagerFilter),
                 AllowedFilter::scope('introduction_on'),
                 AllowedFilter::scope('filter_done_from'),
                 AllowedFilter::scope('done_from'),
@@ -73,28 +58,23 @@ class CustomerProjectController extends Controller
                 AllowedFilter::exact('project_delivery_note_back'),
             ])
             ->allowedSorts([
-                'status', 'introduction_on', 'done_from', AllowedSort::custom('name', new ProjectCustomerNameSort()), AllowedSort::custom('blz', new ProjectCustomerBlzSort())
+                'status', 'introduction_on', 'done_from', AllowedSort::custom('name', new ProjectCustomerNameSort), AllowedSort::custom('blz', new ProjectCustomerBlzSort),
             ])->paginate(\request('per_page', 25));
-
-
-
 
         $customerProjectsChart = QueryBuilder::for(CustomerProject::class, $filter)
             ->with(['customer'])->allowedFilters([
-                'id', 'name', 'short_name', 'blz', 'bic', 'location', 'business_data', 'approved_appointment',  'is_customer','product_id', 'status', 'introduction_on', 'done_from',
+                'id', 'name', 'short_name', 'blz', 'bic', 'location', 'business_data', 'approved_appointment',  'is_customer', 'product_id', 'status', 'introduction_on', 'done_from',
                 AllowedFilter::exact('type_id'),
                 AllowedFilter::exact('classification_id'),
                 AllowedFilter::exact('customer.association_id'),
-                AllowedFilter::custom('vertrieb_mehrwerte_beratung', new CustomerProjectKeyAccountManagerFilter()),
+                AllowedFilter::custom('vertrieb_mehrwerte_beratung', new CustomerProjectKeyAccountManagerFilter),
                 AllowedFilter::exact('customer_id'),
                 AllowedFilter::exact('project_delivery_note_send'),
                 AllowedFilter::exact('project_delivery_note_back'),
             ])
             ->allowedSorts([
-                'status', 'introduction_on', 'done_from', AllowedSort::custom('name', new ProjectCustomerNameSort()), AllowedSort::custom('blz', new ProjectCustomerBlzSort())
+                'status', 'introduction_on', 'done_from', AllowedSort::custom('name', new ProjectCustomerNameSort), AllowedSort::custom('blz', new ProjectCustomerBlzSort),
             ])->get();
-
-
 
         $pieChartData['data'] = $customerProjectsChart->groupBy('status');
         $pieChartData['data'] = collect([
@@ -108,17 +88,15 @@ class CustomerProjectController extends Controller
             'Angebot abgelehnt' => is_null($pieChartData['data']['Angebot abgelehnt']) ? 0 : $pieChartData['data']['Angebot abgelehnt'],
         ]);
 
-
         $pieChartData['total'] = $customerProjectsChart->count();
-
 
         $listCountStatus = [];
         $wholeCount = 0;
 
         $statusList = [
             'Interesse' => 0,
-            'Vorläufig abgelehnt'  => 0,
-            'Angebot übergeben'  => 0,
+            'Vorläufig abgelehnt' => 0,
+            'Angebot übergeben' => 0,
             'Auftrag avisiert' => 0,
             'Auftrag erteilt' => 0,
             'Vertriebsansatz abgeschlossen' => 0,
@@ -131,21 +109,24 @@ class CustomerProjectController extends Controller
         // Prefill timeline (0 => not-approved, 1 => approved)
         $timeline = [
             0 => [],
-            1 => []
+            1 => [],
         ];
         $total = [
             0 => 0,
-            1 => 0
+            1 => 0,
         ];
 
         // Set up timeline (now -3 months and plus 15 months)
-        $from = Carbon::now()->subMonth(3); $to = Carbon::now()->addMonth(15); $now = $from; $timeline_header = [];
+        $from = Carbon::now()->subMonth(3);
+        $to = Carbon::now()->addMonth(15);
+        $now = $from;
+        $timeline_header = [];
         while ($now < $to) {
             $monthYear = $this->convert_to_german_month($now, $now->format('y'));
-            //$monthYear = $now->format('M');
-            $timeline[ 0 ][ $now->format('Y-m') ] = 0;
-            $timeline[ 1 ][ $now->format('Y-m') ] = 0;
-            $timeline_header[ $now->format('Y-m') ] = $monthYear;
+            // $monthYear = $now->format('M');
+            $timeline[0][$now->format('Y-m')] = 0;
+            $timeline[1][$now->format('Y-m')] = 0;
+            $timeline_header[$now->format('Y-m')] = $monthYear;
 
             $now->addMonth(1);
         }
@@ -160,10 +141,10 @@ class CustomerProjectController extends Controller
 
             if ($element['introduction_on'] !== null) {
 
-                if (array_key_exists($introduction_date, $timeline[ 0 ])) {
+                if (array_key_exists($introduction_date, $timeline[0])) {
 
-                    $timeline[ $element['approved_appointment'] ][ $introduction_date ] += 1;
-                    $total[ $element['approved_appointment'] ] += 1;
+                    $timeline[$element['approved_appointment']][$introduction_date] += 1;
+                    $total[$element['approved_appointment']] += 1;
 
                 }
 
@@ -173,19 +154,16 @@ class CustomerProjectController extends Controller
         $listCountStatus = array_merge($listCountStatus, $statusList);
         $listCountStatus = array_merge($listCountStatus, ['total' => $wholeCount]);
 
-
-
         $chart['timeline'] = [
             'header' => $timeline_header,
             'data' => $timeline,
-            'total' => $total
+            'total' => $total,
         ];
-
 
         return view('backend.projects.overview', compact('customerProjects', 'pieChartData', 'chart'));
     }
 
-    public function create (Request $request, Customer $customer, CustomerProject $project)
+    public function create(Request $request, Customer $customer, CustomerProject $project)
     {
         $modal = 'create';
 
@@ -198,7 +176,8 @@ class CustomerProjectController extends Controller
 
     }
 
-    public function store (Request $request, Customer $customer) {
+    public function store(Request $request, Customer $customer)
+    {
 
         $data = Validator::make($request->all(), [
             'project_created_by' => 'required',
@@ -208,10 +187,10 @@ class CustomerProjectController extends Controller
             'product_categorie' => 'required',
             'status' => 'required|max:255',
             'done_chance' => 'required',
-            //'planned_appointment' => 'required',
+            // 'planned_appointment' => 'required',
             'introduction_on' => 'nullable|date',
             'done_from' => 'nullable|date',
-            //'done_until' => 'nullable',
+            // 'done_until' => 'nullable',
             'approved_appointment' => 'nullable',
             'send_project' => 'nullable',
             'send_at' => 'nullable',
@@ -230,9 +209,8 @@ class CustomerProjectController extends Controller
             'contact_person' => 'required',
             'first_contact_date' => 'nullable|date',
             'next_contact_date' => 'nullable|date',
-            'file' => 'nullable'
+            'file' => 'nullable',
         ]);
-        
 
         if ($data->fails()) {
             return response()->json(['status' => 'error', 'errors' => $data->errors()])->setStatusCode(200);
@@ -246,13 +224,13 @@ class CustomerProjectController extends Controller
 
             $file = $request->file('file');
 
-            $fileName = hash('sha512', time() . $request->get('name') . $request->file->getClientOriginalName());
+            $fileName = hash('sha512', time().$request->get('name').$request->file->getClientOriginalName());
             $path = $request->file->storeAs('files', $fileName, 's3_local');
 
             File::create([
                 'name' => $fileName,
                 'description' => $file->getClientOriginalName(),
-                'checksum' => md5_file(storage_path('app/' . $path)),
+                'checksum' => md5_file(storage_path('app/'.$path)),
                 'fileable_type' => 'project',
                 'fileable_id' => $project->id,
             ]);
@@ -278,11 +256,9 @@ class CustomerProjectController extends Controller
 
     }
 
-    public function show (Request $request, Customer $customer, CustomerProject $project)
+    public function show(Request $request, Customer $customer, CustomerProject $project)
     {
         $modal = 'show';
-
-
 
         $view = view('backend.customers.partials.modal.project.showForm', compact('modal', 'project', 'customer'))->render();
 
@@ -293,7 +269,7 @@ class CustomerProjectController extends Controller
 
     }
 
-    public function edit (Request $request, Customer $customer, CustomerProject $project)
+    public function edit(Request $request, Customer $customer, CustomerProject $project)
     {
         $modal = 'update';
 
@@ -306,7 +282,8 @@ class CustomerProjectController extends Controller
 
     }
 
-    public function update (Request $request, Customer $customer, CustomerProject $project) {
+    public function update(Request $request, Customer $customer, CustomerProject $project)
+    {
 
         $data = Validator::make($request->all(), [
             'project_created_by' => 'required',
@@ -316,10 +293,10 @@ class CustomerProjectController extends Controller
             'product_categorie' => 'required',
             'status' => 'required|max:255',
             'done_chance' => 'required',
-            //'planned_appointment' => 'required',
+            // 'planned_appointment' => 'required',
             'introduction_on' => 'nullable|date',
             'done_from' => 'nullable|date',
-            //'done_until' => 'nullable',
+            // 'done_until' => 'nullable',
             'approved_appointment' => 'nullable',
             'send_project' => 'nullable',
             'send_at' => 'nullable',
@@ -338,7 +315,7 @@ class CustomerProjectController extends Controller
             'contact_person' => 'required',
             'first_contact_date' => 'nullable|date',
             'next_contact_date' => 'nullable|date',
-            'file' => 'nullable'
+            'file' => 'nullable',
         ]);
 
         if ($data->fails()) {
@@ -353,13 +330,13 @@ class CustomerProjectController extends Controller
 
             $file = $request->file('file');
 
-            $fileName = hash('sha512', time() . $request->get('name') . $request->file->getClientOriginalName());
+            $fileName = hash('sha512', time().$request->get('name').$request->file->getClientOriginalName());
             $path = $request->file->storeAs('files', $fileName, 's3_local');
 
             File::create([
                 'name' => $fileName,
                 'description' => $file->getClientOriginalName(),
-                'checksum' => md5_file(storage_path('app/' . $path)),
+                'checksum' => md5_file(storage_path('app/'.$path)),
                 'fileable_type' => 'project',
                 'fileable_id' => $project->id,
             ]);
@@ -371,9 +348,8 @@ class CustomerProjectController extends Controller
 
     }
 
-
-
-    public function convert_to_german_month( \Carbon\Carbon $date, String $year) : string {
+    public function convert_to_german_month(\Carbon\Carbon $date, string $year): string
+    {
         $month_mapping = [
             1 => 'Jan',
             2 => 'Feb',
@@ -386,24 +362,27 @@ class CustomerProjectController extends Controller
             9 => 'Sep',
             10 => 'Okt',
             11 => 'Nov',
-            12 => 'Dez'
+            12 => 'Dez',
         ];
         if (array_key_exists($date->format('n'), $month_mapping)) {
-            $month_year = $month_mapping[ $date->format('n') ] . ' ' . $year;
+            $month_year = $month_mapping[$date->format('n')].' '.$year;
         } else {
-            $month_year = $date->format('M') . ' ' . $year;
+            $month_year = $date->format('M').' '.$year;
         }
+
         return $month_year;
     }
 
-    public function product_categories($id) {
+    public function product_categories($id)
+    {
 
         $categories = ProductCategories::where('product_service_id', $id)->get();
 
         return response()->json($categories);
     }
 
-    public function product(Request $request) {
+    public function product(Request $request)
+    {
 
         $data = $request->all();
 
@@ -412,7 +391,8 @@ class CustomerProjectController extends Controller
         return response()->json($products);
     }
 
-    public function destroy (Request $request, $project) {
+    public function destroy(Request $request, $project)
+    {
         $project = CustomerProject::find($project);
         $project->delete();
 
@@ -448,6 +428,4 @@ class CustomerProjectController extends Controller
         return view('backend.customers.show', compact('customer', 'customerProjects', 'tab', 'showFilter'));
 
     }
-
-
 }

@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 /**
  * Class LoginController
- * @package App\Http\Controllers\Auth
  */
 class LoginController extends Controller
 {
@@ -47,13 +45,12 @@ class LoginController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function scockpit_auth(Request $request)
     {
 
-        if (!$request->has('code')) {
+        if (! $request->has('code')) {
             return Socialite::with('s_cockpit')->redirect();
         }
 
@@ -68,7 +65,7 @@ class LoginController extends Controller
                 'first_name' => $scockpit_user->user['first_name'],
                 'last_name' => $scockpit_user->user['last_name'],
                 'email' => $scockpit_user->user['email'],
-                'scockpit_user_id' => $scockpit_user->user['id']
+                'scockpit_user_id' => $scockpit_user->user['id'],
             ]);
 
         } else {
@@ -90,7 +87,6 @@ class LoginController extends Controller
 
         session()->put('user', $scockpit_user->user);
 
-
         return redirect()->to('/backend/dashboard');
     }
 
@@ -103,8 +99,7 @@ class LoginController extends Controller
 
             $user = Auth::user();
 
-            if(is_null($user->verified_at))
-            {
+            if (is_null($user->verified_at)) {
                 return back()->withErrors([
                     'email' => 'Bitte warten sie, bis wir Ihr Benutzerkonto freigegeben haben.',
                 ]);
@@ -119,14 +114,12 @@ class LoginController extends Controller
 
     }
 
-    /**
-     *
-     */
     public function authenticated(Request $request, $user)
     {
 
         if (is_null($user->verified_at)) {
             toastr()->error('Bitte warten Sie, bis Ihr Benutzerkonto von uns freigegeben wurde.');
+
             return redirect()->route('login')
                 ->withErrors($request['email'])
                 ->withInput();
@@ -139,5 +132,4 @@ class LoginController extends Controller
         return redirect()->to('/backend/dashboard');
 
     }
-
 }

@@ -36,38 +36,37 @@ Route::view('/datenschutz', 'shared.privacy')->name('shared.privacy');
 /**
  * Backend
  */
-
 if (env('APP_ENV') == 'local' && env('SCOCKPIT_SKIP_AUTH') == true) {
     \Auth::loginUsingId(1);
 }
 
-Route::group(['middleware' => ['auth']], function () {
+Route::middleware('auth')->group(function () {
 
-    Route::group(['prefix' => 'backend', 'as' => 'backend.'], function () {
+    Route::prefix('backend')->name('backend.')->group(function () {
 
-        Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
+        Route::prefix('files')->name('files.')->group(function () {
             Route::get('/{file}', [\App\Http\Controllers\DownloadController::class, 'downloadFile'])->name('downloadFile');
             Route::delete('/{file}', [\App\Http\Controllers\DownloadController::class, 'destroy'])->name('destroy');
         });
 
-        Route::group(['prefix' => 'modal', 'as' => 'modal.'], function () {
+        Route::prefix('modal')->name('modal.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Backend\ModalController::class, 'loadModal'])->name('loadModal');
         });
 
-        Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+        Route::prefix('dashboard')->name('dashboard.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('index');
             Route::get('/contacts', [\App\Http\Controllers\Backend\DashboardController::class, 'getContacts'])->name('getContacts');
             Route::get('/measures', [\App\Http\Controllers\Backend\DashboardController::class, 'getMeasures'])->name('getMeasures');
             Route::get('/dmc-contact', [\App\Http\Controllers\Backend\DashboardController::class, 'show'])->name('show');
         });
 
-        Route::group(['prefix' => 'customers', 'as' => 'customers.'], function () {
+        Route::prefix('customers')->name('customers.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Backend\CustomerController::class, 'index'])->name('index');
             Route::get('/showModal', [\App\Http\Controllers\Backend\CustomerController::class, 'showModal'])->name('showModal');
             Route::get('/showBalanceModal', [\App\Http\Controllers\Backend\CustomerController::class, 'showBalanceModal'])->name('showBalanceModal');
             Route::post('/upload', [\App\Http\Controllers\Backend\CustomerController::class, 'upload'])->name('upload');
 
-            Route::group(['prefix' => '{customer}', 'as' => '{customer}.'], function () {
+            Route::prefix('{customer}')->name('{customer}.')->group(function () {
                 Route::get('/updateContactPerson', [\App\Http\Controllers\Backend\CustomerController::class, 'updateContactPerson'])->name('updateContactPerson');
                 Route::get('/updateSocialNetwork', [\App\Http\Controllers\Backend\CustomerController::class, 'updateSocialNetwork'])->name('updateSocialNetwork');
                 Route::get('/', [\App\Http\Controllers\Backend\CustomerController::class, 'show'])->name('show');
@@ -76,10 +75,10 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::delete('/delete', [\App\Http\Controllers\Backend\CustomerController::class, 'delete'])->name('delete');
                 Route::get('/customer/{tab}', [\App\Http\Controllers\Backend\CustomerController::class, 'show'])->name('modalTabs');
 
-                Route::group(['prefix' => 'contact', 'as' => 'contact.'], function () {
+                Route::prefix('contact')->name('contact.')->group(function () {
                     Route::get('/create', [\App\Http\Controllers\Backend\CustomerContactController::class, 'create'])->name('create');
                     Route::post('/store', [\App\Http\Controllers\Backend\CustomerContactController::class, 'store'])->name('store');
-                    Route::group(['prefix' => '{customerContact}', 'as' => '{customerContact}.'], function () {
+                    Route::prefix('{customerContact}')->name('{customerContact}.')->group(function () {
                         Route::post('/update', [\App\Http\Controllers\Backend\CustomerContactController::class, 'update'])->name('update');
                         Route::get('/', [\App\Http\Controllers\Backend\CustomerContactController::class, 'mainLocation'])->name('mainLocation');
                         Route::get('/edit', [\App\Http\Controllers\Backend\CustomerContactController::class, 'edit'])->name('edit');
@@ -87,24 +86,24 @@ Route::group(['middleware' => ['auth']], function () {
                     });
                 });
 
-                Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+                Route::prefix('users')->name('users.')->group(function () {
                     Route::get('/create', [\App\Http\Controllers\Backend\UserController::class, 'createCustomer'])->name('create');
                     Route::post('/store', [\App\Http\Controllers\Backend\UserController::class, 'storeCustomer'])->name('store');
-                    Route::group(['prefix' => '{user}', 'as' => '{user}.'], function () {
+                    Route::prefix('{user}')->name('{user}.')->group(function () {
                         Route::get('/edit', [\App\Http\Controllers\Backend\UserController::class, 'editCustomer'])->name('editCustomer');
                         Route::put('/update', [\App\Http\Controllers\Backend\UserController::class, 'updateCustomer'])->name('update');
                     });
                 });
 
-                Route::group(['prefix' => 'budgets', 'as' => 'budgets.'], function () {
-                    Route::group(['prefix' => '{type}', 'as' => '{type}.'], function () {
+                Route::prefix('budgets')->name('budgets.')->group(function () {
+                    Route::prefix('{type}')->name('{type}.')->group(function () {
                         Route::get('/create', [\App\Http\Controllers\Backend\BudgetController::class, 'createCustomer'])->name('create');
                         Route::post('/store', [\App\Http\Controllers\Backend\BudgetController::class, 'storeCustomer'])->name('store');
                     });
 
-                    Route::group(['prefix' => '{budget}', 'as' => '{budget}.'], function () {
+                    Route::prefix('{budget}')->name('{budget}.')->group(function () {
                         Route::get('/', [\App\Http\Controllers\Backend\BudgetController::class, 'show'])->name('show');
-                        Route::group(['prefix' => '{type}', 'as' => '{type}.'], function () {
+                        Route::prefix('{type}')->name('{type}.')->group(function () {
                             Route::get('/edit', [\App\Http\Controllers\Backend\BudgetController::class, 'editCustomer'])->name('editCustomer');
                             Route::put('/update', [\App\Http\Controllers\Backend\BudgetController::class, 'updateCustomer'])->name('update');
                         });
@@ -112,10 +111,10 @@ Route::group(['middleware' => ['auth']], function () {
                     });
                 });
 
-                Route::group(['prefix' => 'measures', 'as' => 'measures.'], function () {
+                Route::prefix('measures')->name('measures.')->group(function () {
                     Route::get('/create', [\App\Http\Controllers\Backend\MeasuresController::class, 'create'])->name('create');
                     Route::get('/', [\App\Http\Controllers\Backend\MeasuresController::class, 'tabFilterIndex'])->name('tabFilterIndex');
-                    Route::group(['prefix' => '{measure}', 'as' => '{measure}.'], function () {
+                    Route::prefix('{measure}')->name('{measure}.')->group(function () {
                         Route::get('/edit', [\App\Http\Controllers\Backend\MeasuresController::class, 'editCustomer'])->name('editCustomer');
                         Route::put('/', [\App\Http\Controllers\Backend\MeasuresController::class, 'updateOnCustomer'])->name('updateOnCustomer');
                         Route::delete('/', [\App\Http\Controllers\Backend\MeasuresController::class, 'destroy'])->name('destroy');
@@ -125,12 +124,12 @@ Route::group(['middleware' => ['auth']], function () {
             });
         });
 
-        Route::group(['prefix' => 'measures', 'as' => 'measures.'], function () {
+        Route::prefix('measures')->name('measures.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Backend\MeasuresController::class, 'index'])->name('index');
             Route::get('/create', [\App\Http\Controllers\Backend\MeasuresController::class, 'create'])->name('create');
             Route::post('/', [\App\Http\Controllers\Backend\MeasuresController::class, 'store'])->name('store');
             Route::get('/showModal', [\App\Http\Controllers\Backend\MeasuresController::class, 'showExportModal'])->name('showExportModal');
-            Route::group(['prefix' => '{measure}', 'as' => '{measure}.'], function () {
+            Route::prefix('{measure}')->name('{measure}.')->group(function () {
                 Route::get('/edit/{tab?}', [\App\Http\Controllers\Backend\MeasuresController::class, 'edit'])->name('edit');
                 Route::get('/', [\App\Http\Controllers\Backend\MeasuresController::class, 'show'])->name('show');
                 Route::put('/', [\App\Http\Controllers\Backend\MeasuresController::class, 'update'])->name('update');
@@ -140,12 +139,12 @@ Route::group(['middleware' => ['auth']], function () {
             });
         });
 
-        Route::group(['prefix' => 'campaigns', 'as' => 'campaigns.'], function () {
+        Route::prefix('campaigns')->name('campaigns.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Backend\CampaignsController::class, 'index'])->name('index');
             Route::get('/create', [\App\Http\Controllers\Backend\CampaignsController::class, 'create'])->name('create');
             Route::post('/store', [\App\Http\Controllers\Backend\CampaignsController::class, 'store'])->name('store');
             Route::post('/sendCampaignDataToLandingpage', [\App\Http\Controllers\Backend\CampaignsController::class, 'sendCampaignDataToLandingpage'])->name('sendCampaignDataToLandingpage');
-            Route::group(['prefix' => '{campaign}', 'as' => '{campaign}.'], function () {
+            Route::prefix('{campaign}')->name('{campaign}.')->group(function () {
                 Route::get('/edit', [\App\Http\Controllers\Backend\CampaignsController::class, 'edit'])->name('edit');
                 Route::put('/update', [\App\Http\Controllers\Backend\CampaignsController::class, 'update'])->name('update');
                 Route::delete('/destroy', [\App\Http\Controllers\Backend\CampaignsController::class, 'destroy'])->name('destroy');
@@ -154,14 +153,14 @@ Route::group(['middleware' => ['auth']], function () {
             });
         });
 
-        Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+        Route::prefix('users')->name('users.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Backend\UserController::class, 'index'])->name('index');
 
             Route::get('/create', [\App\Http\Controllers\Backend\UserController::class, 'create'])->name('create');
 
             Route::post('/', [\App\Http\Controllers\Backend\UserController::class, 'store'])->name('store');
 
-            Route::group(['prefix' => '{user}', 'as' => '{user}.'], function () {
+            Route::prefix('{user}')->name('{user}.')->group(function () {
                 Route::get('/', [\App\Http\Controllers\Backend\UserController::class, 'show'])->name('show');
                 Route::get('/edit', [\App\Http\Controllers\Backend\UserController::class, 'edit'])->name('edit');
                 Route::post('/', [\App\Http\Controllers\Backend\UserController::class, 'update'])->name('update');
@@ -172,9 +171,9 @@ Route::group(['middleware' => ['auth']], function () {
             });
         });
 
-        Route::group(['prefix' => 'contacts', 'as' => 'contacts.'], function () {
+        Route::prefix('contacts')->name('contacts.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Backend\CustomerContactController::class, 'index'])->name('index');
-            Route::group(['prefix' => '{customerContact}', 'as' => '{customerContact}.'], function () {
+            Route::prefix('{customerContact}')->name('{customerContact}.')->group(function () {
                 Route::get('/', [\App\Http\Controllers\Backend\CustomerContactController::class, 'show'])->name('show');
                 Route::get('/edit', [\App\Http\Controllers\Backend\CustomerContactController::class, 'edit'])->name('edit');
                 Route::post('/', [\App\Http\Controllers\Backend\CustomerContactController::class, 'update'])->name('update');
@@ -182,12 +181,12 @@ Route::group(['middleware' => ['auth']], function () {
             });
         });
 
-        Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
+        Route::prefix('reports')->name('reports.')->group(function () {
             Route::get('customerExportExcel', [\App\Http\Controllers\Backend\ReportsController::class, 'excel_export_customers'])->name('excel_export_customers');
             Route::get('reports/customerExportPDF', [\App\Http\Controllers\Backend\ReportsController::class, 'pdf_export_customers'])->name('pdf_export_customers');
             Route::get('reports/measure/pdf', [\App\Http\Controllers\Backend\ReportsController::class, 'pdf_measure_export'])->name('pdf_measure_export');
 
-            Route::group(['prefix' => '{measure}', 'as' => '{measure}.'], function () {
+            Route::prefix('{measure}')->name('{measure}.')->group(function () {
                 Route::get('reports/customerMeasureExportPDF/', [\App\Http\Controllers\Backend\ReportsController::class, 'excel_export_measure_customers'])->name('excel_export_measure_customers');
             });
 
@@ -198,13 +197,12 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('reports/ProjcectExportPDF', [\App\Http\Controllers\Backend\ReportsController::class, 'pdf_export_projects'])->name('pdf_export_projects');
             Route::get('projectExportExcel', [\App\Http\Controllers\Backend\ReportsController::class, 'excel_export_projects'])->name('excel_export_projects');
             Route::get('reports/ProjectExportPDF', [\App\Http\Controllers\Backend\ReportsController::class, 'pdf_export_projects'])->name('pdf_export_projects');
-            Route::group(['prefix' => 'imports', 'as' => 'imports.'], function () {
+            Route::prefix('imports')->name('imports.')->group(function () {
                 Route::post('/importProjects', [\App\Http\Controllers\Backend\ReportsController::class, 'importProjects'])->name('importProjects');
                 Route::post('/balance_customer', [\App\Http\Controllers\Backend\ReportsController::class, 'balance_customer'])->name('balance_customer');
 
             });
         });
     });
-
 
 });

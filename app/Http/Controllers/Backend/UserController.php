@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use App\Http\Filters\UserScockpitFilter;
-use App\Mail\releaseEmail;
+use App\Mail\sendmail;
 use App\Models\Customer;
 use App\Models\User;
 use Carbon\Carbon;
-use Cassandra\Custom;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Mail\sendmail;
-
 
 class UserController extends Controller
 {
@@ -30,13 +26,13 @@ class UserController extends Controller
 
         $usersQuery = QueryBuilder::for(User::class, $filter)
             ->allowedFilters([
-                'id', 'name', 'first_name', 'last_name',' email', 'phone',
+                'id', 'name', 'first_name', 'last_name', ' email', 'phone',
                 AllowedFilter::scope('customSearch'),
-                AllowedFilter::custom('scockpit_user_id', new UserScockpitFilter()),
+                AllowedFilter::custom('scockpit_user_id', new UserScockpitFilter),
             ])
             ->defaultSort('-id')
             ->allowedSorts([
-                'id', 'last_name', 'first_name'
+                'id', 'last_name', 'first_name',
             ]);
 
         if (Auth::user()->hasRole('Sparkasse')) {
@@ -45,10 +41,8 @@ class UserController extends Controller
 
         $users = $usersQuery->paginate(\request('per_page', 25));
 
-
         return view('backend.users.overview', compact('users'));
     }
-
 
     public function show(User $user)
     {
@@ -95,7 +89,7 @@ class UserController extends Controller
             'email' => 'required|email',
             'phone' => 'nullable|max:20',
             'customer_id' => 'required',
-            'categorie_id' => 'nullable'
+            'categorie_id' => 'nullable',
         ]);
 
         if ($data->fails()) {
@@ -104,7 +98,7 @@ class UserController extends Controller
             $payload = $data->valid();
         }
 
-        $payload['name'] = $payload['first_name'] . ' ' . $payload['last_name'];
+        $payload['name'] = $payload['first_name'].' '.$payload['last_name'];
 
         $user = User::create($payload);
         $user->assignRole('Sparkasse');
@@ -122,7 +116,7 @@ class UserController extends Controller
             'last_name' => 'required',
             'email' => 'required|email',
             'phone' => 'nullable|max:20',
-            'categorie_id' => 'nullable'
+            'categorie_id' => 'nullable',
         ]);
 
         if ($data->fails()) {
@@ -131,7 +125,7 @@ class UserController extends Controller
             $payload = $data->valid();
         }
 
-        $payload['name'] = $payload['first_name'] . ' ' . $payload['last_name'];
+        $payload['name'] = $payload['first_name'].' '.$payload['last_name'];
         $payload['customer_id'] = $customer->id;
 
         User::create($payload);
@@ -141,7 +135,8 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'type' => 'redirect', 'redirect_url' => route('backend.customers.{customer}.modalTabs', [$customer, 'users'])])->setStatusCode(200);
     }
 
-    public function update(Request $request, User $user) {
+    public function update(Request $request, User $user)
+    {
         $data = Validator::make($request->all(), [
             'salutation' => 'required',
             'first_name' => 'required',
@@ -158,7 +153,7 @@ class UserController extends Controller
             $payload = $data->valid();
         }
 
-        $payload['name'] = $payload['first_name'] . ' ' . $payload['last_name'];
+        $payload['name'] = $payload['first_name'].' '.$payload['last_name'];
 
         $user->update($payload);
 
@@ -167,7 +162,8 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'type' => 'reload'])->setStatusCode(200);
     }
 
-    public function updateCustomer (Request $request, Customer $customer, User $user) {
+    public function updateCustomer(Request $request, Customer $customer, User $user)
+    {
         $data = Validator::make($request->all(), [
             'salutation' => 'required',
             'first_name' => 'required',
@@ -184,7 +180,7 @@ class UserController extends Controller
             $payload = $data->valid();
         }
 
-        $payload['name'] = $payload['first_name'] . ' ' . $payload['last_name'];
+        $payload['name'] = $payload['first_name'].' '.$payload['last_name'];
 
         $user->update($payload);
 
@@ -193,7 +189,7 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'type' => 'redirect', 'redirect_url' => route('backend.customers.{customer}.modalTabs', [$customer, 'users'])])->setStatusCode(200);
     }
 
-    public function edit (Request $request, User $user, Customer $customer)
+    public function edit(Request $request, User $user, Customer $customer)
     {
         $modal = 'update';
 
@@ -205,7 +201,7 @@ class UserController extends Controller
         return $response;
     }
 
-    public function editCustomer (Request $request, Customer $customer, User $user)
+    public function editCustomer(Request $request, Customer $customer, User $user)
     {
         $modal = 'update';
 
@@ -217,7 +213,8 @@ class UserController extends Controller
         return $response;
     }
 
-    public function release(Request $request, User $user) {
+    public function release(Request $request, User $user)
+    {
 
         $user->verified_at = Carbon::now();
         $user->save();
@@ -225,19 +222,16 @@ class UserController extends Controller
         try {
 
             $content = 'Ihr Benutzerkonto für das DMC-Cockpit wurde erfolgreich freigegeben.';
-            Mail::to(env('APP_ENV') != 'production' ? 'development@digitalbynature.de' : $user->email)->send(new sendmail('Freischaltung Ihres DMC-Cockpit Zugangs',$content, $user));
+            Mail::to(env('APP_ENV') != 'production' ? 'development@digitalbynature.de' : $user->email)->send(new sendmail('Freischaltung Ihres DMC-Cockpit Zugangs', $content, $user));
             toastr()->success('Der Berater wurde erfolgreich freigegeben.');
 
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Log::error($exception);
             toastr()->error('Die E-Mail Benachrichtigung konnte nicht versendet werden.');
         }
 
-
         return redirect()->to('/backend/users');
     }
-
 
     public function destroy(Request $request, User $user)
     {
@@ -258,7 +252,7 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => false,
-                'data' => 'Diese Person kann nicht gelöscht werden, da Sie einen Benutzeraccount hat.'
+                'data' => 'Diese Person kann nicht gelöscht werden, da Sie einen Benutzeraccount hat.',
             ]);
         }
     }
@@ -272,7 +266,7 @@ class UserController extends Controller
         return redirect()->route('backend.dashboard.index');
     }
 
-    public function leaveImpersonate (User $user)
+    public function leaveImpersonate(User $user)
     {
         auth()->user()->leaveImpersonation();
 

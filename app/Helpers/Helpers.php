@@ -17,11 +17,13 @@ function convert_number($number, $format, $decimals = 2, $nullable = true)
     }
 }
 
-function number_iso($number, $decimals = 2, $nullable = true) {
+function number_iso($number, $decimals = 2, $nullable = true)
+{
     convert_number($number, 'DE=>ISO', $decimals, $nullable);
 }
 
-function number_de($number, $decimals = 2, $nullable = true) {
+function number_de($number, $decimals = 2, $nullable = true)
+{
     convert_number($number, 'ISO=>DE', $decimals, $nullable);
 }
 
@@ -46,7 +48,7 @@ function formatDateTimeLocale($datetime)
 {
     // $locale = localeconv();
 
-    return $datetime->format('d.m.Y H:i:s') . ' Uhr';
+    return $datetime->format('d.m.Y H:i:s').' Uhr';
 }
 
 function timeOfDay($time = null)
@@ -73,5 +75,3 @@ function timeOfDay($time = null)
 
     return $t;
 }
-
-?>

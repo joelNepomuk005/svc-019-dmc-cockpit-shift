@@ -2,17 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Variables;
 use App\Models\ContactType;
-use App\Models\Customer;
-use App\Models\CustomerBudget;
-use App\Models\CustomerContact;
-use App\Models\CustomerMeasures;
-use App\Models\Measures;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 
 class TestdataContactType extends Seeder
 {

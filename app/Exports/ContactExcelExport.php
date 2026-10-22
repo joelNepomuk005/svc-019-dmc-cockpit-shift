@@ -1,16 +1,12 @@
 <?php
 
-
 namespace App\Exports;
 
-
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ContactExcelExport implements WithHeadings, FromCollection
+class ContactExcelExport implements FromCollection, WithHeadings
 {
     use Exportable;
 
@@ -43,5 +39,4 @@ class ContactExcelExport implements WithHeadings, FromCollection
         });
 
     }
-
 }

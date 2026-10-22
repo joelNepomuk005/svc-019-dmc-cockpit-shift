@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Enums\Variables;
 use App\Http\Controllers\Controller;
-use App\Http\Filters\AppointmentsUserFilter;
 use App\Http\Filters\CustomerStateFilter;
 use App\Models\Customer;
 use App\Models\CustomerMeasures;
@@ -13,16 +12,14 @@ use App\Models\Measures;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class MeasuresController extends Controller
 {
-    public function index (Request $request) {
+    public function index(Request $request)
+    {
 
         $filter = new \Illuminate\Http\Request(
             $request->except(['filter.customSearch'])
@@ -33,7 +30,7 @@ class MeasuresController extends Controller
                 'id', 'name',
             ])
             ->allowedSorts([
-                'id', 'name'
+                'id', 'name',
             ])
             ->defaultSort('-id')
             ->paginate(\request('per_page', 25));
@@ -43,20 +40,18 @@ class MeasuresController extends Controller
 
         foreach (Customer::all() as $customer) {
             $customerMeasure = CustomerMeasures::where('customer_id', $customer->id)->get()->count();
-            if ($customerMeasure > 0)
-            {
+            if ($customerMeasure > 0) {
                 $activeMeasures++;
-            } else
-            {
+            } else {
                 $inactiveMeasures++;
             }
         }
 
-
         return view('backend.measures.overview', compact('measures', 'activeMeasures', 'inactiveMeasures'));
     }
 
-    public function show (Request $request, Measures $measure) {
+    public function show(Request $request, Measures $measure)
+    {
 
         return view('backend.measures.show', compact('measure'));
     }
@@ -99,7 +94,7 @@ class MeasuresController extends Controller
                     'id', 'name',
                 ])
                 ->allowedSorts([
-                    'id', 'name'
+                    'id', 'name',
                 ])
                 ->defaultSort('-id')
                 ->paginate(25);
@@ -125,7 +120,7 @@ class MeasuresController extends Controller
             $customers = Customer::whereIn('id', $measure->customer_ids)->get();
             $customerArray = [];
 
-            if (!is_null($measure->customer_ids) && in_array(0, $measure->customer_ids)) {
+            if (! is_null($measure->customer_ids) && in_array(0, $measure->customer_ids)) {
 
                 $customerMeasuresID = CustomerMeasures::all()->pluck('id')->toArray();
                 $customers = Customer::whereNotIn('id', $customerMeasuresID)->paginate(25);
@@ -141,8 +136,7 @@ class MeasuresController extends Controller
 
             }
 
-        }
-        else {
+        } else {
 
             if (is_null($measure->customer_ids) || in_array(0, $measure->customer_ids)) {
 
@@ -152,7 +146,7 @@ class MeasuresController extends Controller
                         $query->where('measure_id', $measure->id);
                     })
                     ->allowedFilters([
-                        AllowedFilter::custom('state', new CustomerStateFilter()),
+                        AllowedFilter::custom('state', new CustomerStateFilter),
                     ])->paginate(25);
             } else {
 
@@ -162,7 +156,7 @@ class MeasuresController extends Controller
                     ->whereHas('measures', function ($query) use ($measure) {
                         $query->where('measure_id', $measure->id);
                     })->allowedFilters([
-                        AllowedFilter::custom('state',   new CustomerStateFilter())
+                        AllowedFilter::custom('state', new CustomerStateFilter),
                     ])->paginate(25);
             }
 
@@ -174,7 +168,7 @@ class MeasuresController extends Controller
         return view('backend.measures.edit', compact('measure', 'customerMeasures', 'customers', 'tab', 'showFilter'));
     }
 
-    public function editCustomer (Request $request, Customer $customer, Measures $measure)
+    public function editCustomer(Request $request, Customer $customer, Measures $measure)
     {
         $modal = 'update';
 
@@ -188,7 +182,7 @@ class MeasuresController extends Controller
         return $response;
     }
 
-    public function create (Request $request)
+    public function create(Request $request)
     {
         $modal = 'create';
 
@@ -200,7 +194,7 @@ class MeasuresController extends Controller
         return $response;
     }
 
-    public function store (Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -208,7 +202,7 @@ class MeasuresController extends Controller
             'to' => 'required|date',
             'customer_ids' => 'required',
             'promotion_package' => 'nullable',
-            'measure_image' => 'nullable'
+            'measure_image' => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -219,18 +213,17 @@ class MeasuresController extends Controller
 
         $measure = Measures::create($payload);
 
-
         if ($request->hasFile('promotion_package')) {
 
             $file = $request->file('promotion_package');
-            $this->saveFile($measure, $file,'is_promotion_package');
+            $this->saveFile($measure, $file, 'is_promotion_package');
 
         }
 
         if ($request->hasFile('measure_image')) {
 
             $file = $request->file('measure_image');
-            $this->saveFile($measure, $file,'is_measure_image');
+            $this->saveFile($measure, $file, 'is_measure_image');
 
         }
 
@@ -242,7 +235,7 @@ class MeasuresController extends Controller
 
     }
 
-    public function update (Request $request, Measures $measure)
+    public function update(Request $request, Measures $measure)
     {
         $payload = $request->validate([
             'promotion_package' => 'nullable',
@@ -257,39 +250,35 @@ class MeasuresController extends Controller
             'customer_measures_dates.*.to' => 'nullable|date',
         ]);
 
-        if ($request->hasFile('promotion_package'))
-        {
+        if ($request->hasFile('promotion_package')) {
 
             $file = File::find($measure->promotionPackage()->id);
 
-            if(!is_null($file))
-            {
+            if (! is_null($file)) {
                 $file->delete();
             }
 
             $file = $request->file('promotion_package');
-            $this->saveFile($measure, $file,'is_promotion_package');
+            $this->saveFile($measure, $file, 'is_promotion_package');
         }
 
-        if ($request->hasFile('measure_image'))
-        {
+        if ($request->hasFile('measure_image')) {
 
             $file = File::find($measure->measureImage()->id);
 
-            if(!is_null($file))
-            {
+            if (! is_null($file)) {
                 $file->delete();
             }
 
             $file = $request->file('measure_image');
-            $this->saveFile($measure, $file,'is_measure_image');
+            $this->saveFile($measure, $file, 'is_measure_image');
         }
 
         foreach ($payload['state'] as $customer_id => $state) {
 
             $customerMeasure = CustomerMeasures::where('measure_id', $measure->id)->where('customer_id', $customer_id)->first();
 
-            if (!empty($customerMeasure)) {
+            if (! empty($customerMeasure)) {
                 if ($customerMeasure->state != $state) {
                     if ($state == Variables::$measuresStates['states']['done'] || $state == Variables::$measuresStates['states']['closed']) {
                         $customerMeasure->update(['to' => Carbon::now()]);
@@ -311,7 +300,7 @@ class MeasuresController extends Controller
         foreach ($payload['incentivization'] as $customer_id => $value) {
             $customerMeasure = CustomerMeasures::where('measure_id', $measure->id)->where('customer_id', $customer_id)->first();
 
-            if (!empty($customerMeasure)) {
+            if (! empty($customerMeasure)) {
                 $customerMeasure->update(['incentivization' => $value]);
             }
         }
@@ -324,13 +313,13 @@ class MeasuresController extends Controller
         if ($payload['customer_measures_dates']) {
             foreach ($payload['customer_measures_dates'] as $customer_id => $dates) {
 
-                if($dates['from'] && $dates['to']) {
+                if ($dates['from'] && $dates['to']) {
                     $customerMeasure = CustomerMeasures::where('measure_id', $measure->id)->where('customer_id', $customer_id)->first();
 
-                    if (!empty($customerMeasure)) {
+                    if (! empty($customerMeasure)) {
                         $customerMeasure->update([
                             'from' => $dates['from'],
-                            'to' => $dates['to']
+                            'to' => $dates['to'],
                         ]);
                     }
                 }
@@ -342,7 +331,8 @@ class MeasuresController extends Controller
         return redirect()->route('backend.measures.index');
     }
 
-    public function updateOnCustomer (Request $request, Customer $customer, Measures $measure) {
+    public function updateOnCustomer(Request $request, Customer $customer, Measures $measure)
+    {
 
         $payload = $request->validate([
             'state' => 'nullable',
@@ -354,7 +344,7 @@ class MeasuresController extends Controller
             'cashback_unlimited' => 'nullable',
         ]);
 
-        if (!empty($payload['cashback_unlimited'])) {
+        if (! empty($payload['cashback_unlimited'])) {
             $payload['cashback'] = null;
         }
 
@@ -364,7 +354,7 @@ class MeasuresController extends Controller
         $payload['measure_id'] = $measure->id;
         $payload['causer_id'] = Auth::user()->id;
 
-        if (!array_key_exists('state', $payload)) {
+        if (! array_key_exists('state', $payload)) {
             $payload['state'] = 'planned';
         }
 
@@ -388,9 +378,9 @@ class MeasuresController extends Controller
 
     private function saveFile($measure, $file, $fileKey)
     {
-        $fileName = hash('sha512', time() . $file->get('name') . $file->getClientOriginalName());
+        $fileName = hash('sha512', time().$file->get('name').$file->getClientOriginalName());
 
-        if ($file->getMimeType() == 'image/png' || $file->getMimeType() == 'image/jpeg' ||  $file->getMimeType() == 'image/gif') {
+        if ($file->getMimeType() == 'image/png' || $file->getMimeType() == 'image/jpeg' || $file->getMimeType() == 'image/gif') {
             $path = \Storage::disk('s3_public')->putFileAs('', $file, $file->getClientOriginalName());
         } else {
             $path = \Storage::disk('s3_local')->putFileAs('files', $file, $file->getClientOriginalName());
@@ -403,16 +393,16 @@ class MeasuresController extends Controller
             'path' => $path,
             'measure_id' => $measure->id,
             'file_type' => $file->getMimeType(),
-            $fileKey    => 1,
+            $fileKey => 1,
         ]);
     }
 
-    public function showMeasure (Measures $measure) {
+    public function showMeasure(Measures $measure)
+    {
 
-        $customer = Customer::find(Auth::user()->customer->id );
+        $customer = Customer::find(Auth::user()->customer->id);
 
         return view('backend.measures.show', compact('measure', 'customer'));
 
     }
-
 }
