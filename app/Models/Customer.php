@@ -14,8 +14,6 @@ class Customer extends Model
 {
     use LogsActivity, SoftDeletes;
 
-    protected $dates = ['deleted_at'];
-
     protected static $logAttributes = ['*'];
 
     /**
