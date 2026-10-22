@@ -33,9 +33,6 @@ class CustomerContact extends Model
         'contact_type_id' => 'integer',
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);

@@ -45,9 +45,6 @@ class Customer extends Model
         $query->where('bic', '=', $bic);
     }
 
-    /**
-     * @param  string  $search
-     */
     public function scopeCustomSearch(Builder $query, string $search)
     {
         $query
@@ -61,9 +58,6 @@ class Customer extends Model
         return $this->hasMany(User::class, 'customer_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function contacts(): HasMany
     {
         return $this->hasMany(CustomerContact::class, 'customer_id', 'id')->orderBy('created_at', 'DESC');
@@ -74,9 +68,6 @@ class Customer extends Model
         return $this->hasOne(CustomerAssociation::class, 'id', 'association_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');

@@ -38,25 +38,16 @@ class User extends AuthenticatableUser
      */
     protected $hidden = ['api_token'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function customer(): HasOne
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
 
-    /**
-     * @return mixed
-     */
     public function userCategories(): HasOne
     {
         return $this->hasOne(UserCategories::class, 'id', 'categorie_id');
     }
 
-    /**
-     * @param  string  $search
-     */
     public function scopeCustomSearch(Builder $query, string $search)
     {
         $query

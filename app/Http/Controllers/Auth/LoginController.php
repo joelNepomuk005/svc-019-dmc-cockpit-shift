@@ -45,9 +45,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function scockpit_auth(Request $request): RedirectResponse
     {
 
