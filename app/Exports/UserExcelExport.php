@@ -6,7 +6,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class UserExcelExport implements WithHeadings, FromCollection
+class UserExcelExport implements FromCollection, WithHeadings
 {
     use Exportable;
 
@@ -36,7 +36,7 @@ class UserExcelExport implements WithHeadings, FromCollection
     {
         return $this->data->map(function ($user) {
             return array_values([
-                !empty($user->scockpit_user_id) ? 'Ja' : 'Nein',
+                ! empty($user->scockpit_user_id) ? 'Ja' : 'Nein',
                 $user->salutation == 'male' ? 'Herr' : 'Frau',
                 $user->first_name,
                 $user->last_name,
@@ -49,5 +49,4 @@ class UserExcelExport implements WithHeadings, FromCollection
         });
 
     }
-
 }

@@ -15,8 +15,7 @@ class InstituteSeeder extends Seeder
      */
     public function run()
     {
-        if(env('APP_ENV') != 'production')
-        {
+        if (env('APP_ENV') != 'production') {
             CustomerAssociation::create(['name' => 'Deutscher Sparkassen- und Giroverband', 'short_name' => 'DSGV']);
             CustomerAssociation::create(['name' => 'Hanseatischer Sparkassen- und Giroverband', 'short_name' => 'HSGV']);
             CustomerAssociation::create(['name' => 'Ostdeutscher Sparkassenverband', 'short_name' => 'OSV']);
@@ -33,7 +32,7 @@ class InstituteSeeder extends Seeder
             CustomerAssociation::create(['name' => 'Dritte', 'short_name' => 'Dritte']);
             CustomerAssociation::create(['name' => 'Verbund', 'short_name' => 'Verbund']);
 
-            Customer::create(['name' => 'Sparkasse Musterstadt', 'long_name' => 'Sparkasse Musterstadt', 'association_id' => NULL, 'bic' => 'MUSTER0000', 'blz' => '0']);
+            Customer::create(['name' => 'Sparkasse Musterstadt', 'long_name' => 'Sparkasse Musterstadt', 'association_id' => null, 'bic' => 'MUSTER0000', 'blz' => '0']);
             Customer::create(['name' => 'Sparkasse Krefeld', 'long_name' => 'Sparkasse Krefeld', 'association_id' => 4, 'bic' => 'SPKRDE33XXX', 'blz' => '32050000']);
             Customer::create(['name' => 'Stadtsparkasse Burgdorf', 'long_name' => 'Stadtsparkasse Burgdorf', 'association_id' => 10, 'bic' => 'NOLADE21BUF', 'blz' => '25151371']);
             Customer::create(['name' => 'Sparkasse SoestWerl', 'long_name' => 'Sparkasse SoestWerl', 'association_id' => 13, 'bic' => 'WELADED1SOS', 'blz' => '41450075']);
@@ -44,7 +43,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse St. Blasien', 'long_name' => 'Sparkasse St. Blasien', 'association_id' => 9, 'bic' => 'SOLADES1STB', 'blz' => '68052230 ']);
             Customer::create(['name' => 'Sparkasse Coburg - Lichtenfels', 'long_name' => 'Sparkasse Coburg - Lichtenfels', 'association_id' => 7, 'bic' => 'BYLADEM1COB', 'blz' => '78350000']);
             Customer::create(['name' => 'Wartburg-Sparkasse', 'long_name' => 'Wartburg-Sparkasse', 'association_id' => 5, 'bic' => 'HELADEF1WAK', 'blz' => '84055050 ']);
-            Customer::create(['name' => 'Landesbank Berlin AG/Berliner Sparkasse', 'long_name' => 'Landesbank Berlin AG/Berliner Sparkasse', 'association_id' => NULL, 'bic' => 'BELADEBEXXX', 'blz' => '10050000']);
+            Customer::create(['name' => 'Landesbank Berlin AG/Berliner Sparkasse', 'long_name' => 'Landesbank Berlin AG/Berliner Sparkasse', 'association_id' => null, 'bic' => 'BELADEBEXXX', 'blz' => '10050000']);
             Customer::create(['name' => 'OstseeSparkasse Rostock', 'long_name' => 'OstseeSparkasse Rostock', 'association_id' => 3, 'bic' => 'NOLADE21ROS', 'blz' => '13050000']);
             Customer::create(['name' => 'Sparkasse Mecklenburg-Nordwest', 'long_name' => 'Sparkasse Mecklenburg-Nordwest', 'association_id' => 3, 'bic' => 'NOLADE21WIS', 'blz' => '14051000']);
             Customer::create(['name' => 'Sparkasse Parchim-Lübz', 'long_name' => 'Sparkasse Parchim-Lübz', 'association_id' => 3, 'bic' => 'NOLADE21PCH', 'blz' => '14051362']);
@@ -72,7 +71,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Holstein', 'long_name' => 'Sparkasse Holstein', 'association_id' => 6, 'bic' => 'NOLADE21HOL', 'blz' => '21352240']);
             Customer::create(['name' => 'Sparkasse Mittelholstein AG', 'long_name' => 'Sparkasse Mittelholstein AG', 'association_id' => 6, 'bic' => 'NOLADE21RDB', 'blz' => '21450000']);
             Customer::create(['name' => 'Nord-Ostsee Sparkasse', 'long_name' => 'Nord-Ostsee Sparkasse', 'association_id' => 6, 'bic' => 'NOLADE21NOS', 'blz' => '21750000']);
-            Customer::create(['name' => 'Sparkasse Hennstedt-Wesselburen', 'long_name' => 'Sparkasse Hennstedt-Wesselburen', 'association_id' => NULL, 'bic' => 'NOLADE21RDB', 'blz' => '21852310']);
+            Customer::create(['name' => 'Sparkasse Hennstedt-Wesselburen', 'long_name' => 'Sparkasse Hennstedt-Wesselburen', 'association_id' => null, 'bic' => 'NOLADE21RDB', 'blz' => '21852310']);
             Customer::create(['name' => 'Sparkasse Elmshorn', 'long_name' => 'Sparkasse Elmshorn', 'association_id' => 6, 'bic' => 'NOLADE21ELH', 'blz' => '22150000']);
             Customer::create(['name' => 'Stadtsparkasse Wedel', 'long_name' => 'Stadtsparkasse Wedel', 'association_id' => 6, 'bic' => 'NOLADE21WED', 'blz' => '22151730 ']);
             Customer::create(['name' => 'Sparkasse Westholstein', 'long_name' => 'Sparkasse Westholstein', 'association_id' => 6, 'bic' => 'NOLADE21WHO', 'blz' => '22250020']);
@@ -84,7 +83,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Stade-Altes Land', 'long_name' => 'Sparkasse Stade-Altes Land', 'association_id' => 10, 'bic' => 'NOLADE21STS', 'blz' => '24151005']);
             Customer::create(['name' => 'Kreissparkasse Stade', 'long_name' => 'Kreissparkasse Stade', 'association_id' => 10, 'bic' => 'NOLADE21STK', 'blz' => '24151116']);
             Customer::create(['name' => 'Sparkasse Rotenburg Osterholz', 'long_name' => 'Sparkasse Rotenburg Osterholz', 'association_id' => 10, 'bic' => 'BRLADE21ROB', 'blz' => '24151235 ']);
-            Customer::create(['name' => 'Norddeutsche Landesbank / Nord LB', 'long_name' => 'Norddeutsche Landesbank / Nord LB', 'association_id' => NULL, 'bic' => 'NOLADE2HXXX', 'blz' => '25050000']);
+            Customer::create(['name' => 'Norddeutsche Landesbank / Nord LB', 'long_name' => 'Norddeutsche Landesbank / Nord LB', 'association_id' => null, 'bic' => 'NOLADE2HXXX', 'blz' => '25050000']);
             Customer::create(['name' => 'Sparkasse Hannover', 'long_name' => 'Sparkasse Hannover', 'association_id' => 10, 'bic' => 'SPKHDE2HXXX', 'blz' => '25050180']);
             Customer::create(['name' => 'Stadtsparkasse Barsinghausen', 'long_name' => 'Stadtsparkasse Barsinghausen', 'association_id' => 10, 'bic' => 'NOLADE21BAH', 'blz' => '25151270 ']);
             Customer::create(['name' => 'Kreissparkasse Fallingbostel in Walsrode', 'long_name' => 'Kreissparkasse Fallingbostel in Walsrode', 'association_id' => 10, 'bic' => 'NOLADE21WAL', 'blz' => '25152375']);
@@ -94,7 +93,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Schaumburg', 'long_name' => 'Sparkasse Schaumburg', 'association_id' => 10, 'bic' => 'NOLADE21SHG', 'blz' => '25551480']);
             Customer::create(['name' => 'Sparkasse Nienburg', 'long_name' => 'Sparkasse Nienburg', 'association_id' => 10, 'bic' => 'NOLADE21NIB', 'blz' => '25650106 ']);
             Customer::create(['name' => 'Kreissparkasse Grafschaft Diepholz', 'long_name' => 'Kreissparkasse Grafschaft Diepholz', 'association_id' => 10, 'bic' => 'BRLADE21DHZ', 'blz' => '25651325']);
-            Customer::create(['name' => 'Sparkasse Celle', 'long_name' => 'Sparkasse Celle', 'association_id' => NULL, 'bic' => 'NOLADE21CEL', 'blz' => '25750001']);
+            Customer::create(['name' => 'Sparkasse Celle', 'long_name' => 'Sparkasse Celle', 'association_id' => null, 'bic' => 'NOLADE21CEL', 'blz' => '25750001']);
             Customer::create(['name' => 'Sparkasse Uelzen Lüchow-Dannenberg', 'long_name' => 'Sparkasse Uelzen Lüchow-Dannenberg', 'association_id' => 10, 'bic' => 'NOLADE21UEL', 'blz' => '25850110']);
             Customer::create(['name' => 'Kreissparkasse Soltau', 'long_name' => 'Kreissparkasse Soltau', 'association_id' => 10, 'bic' => 'NOLADE21SOL', 'blz' => '25851660']);
             Customer::create(['name' => 'Sparkasse Hildesheim Goslar Peine', 'long_name' => 'Sparkasse Hildesheim Goslar Peine', 'association_id' => 10, 'bic' => 'NOLADE21HIK', 'blz' => '25950130']);
@@ -118,7 +117,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse LeerWittmund', 'long_name' => 'Sparkasse LeerWittmund', 'association_id' => 10, 'bic' => 'BRLADE21LER', 'blz' => '28550000']);
             Customer::create(['name' => 'Die Sparkasse Bremen AG', 'long_name' => 'Die Sparkasse Bremen AG', 'association_id' => 2, 'bic' => 'SBREDE22XXX', 'blz' => '29050101']);
             Customer::create(['name' => 'Kreissparkasse Syke', 'long_name' => 'Kreissparkasse Syke', 'association_id' => 10, 'bic' => 'BRLADE21SYK', 'blz' => '29151700 ']);
-            Customer::create(['name' => 'Kreissparkasse Osterholz', 'long_name' => 'Kreissparkasse Osterholz', 'association_id' => NULL, 'bic' => 'BRLADE21ROB', 'blz' => '29152300']);
+            Customer::create(['name' => 'Kreissparkasse Osterholz', 'long_name' => 'Kreissparkasse Osterholz', 'association_id' => null, 'bic' => 'BRLADE21ROB', 'blz' => '29152300']);
             Customer::create(['name' => 'Sparkasse Scheeßel', 'long_name' => 'Sparkasse Scheeßel', 'association_id' => 10, 'bic' => 'BRLADE21SHL', 'blz' => '29152550 ']);
             Customer::create(['name' => 'Kreissparkasse Verden', 'long_name' => 'Kreissparkasse Verden', 'association_id' => 10, 'bic' => 'BRLADE21VER', 'blz' => '29152670']);
             Customer::create(['name' => 'Weser-Elbe Sparkasse', 'long_name' => 'Weser-Elbe Sparkasse', 'association_id' => 10, 'bic' => 'BRLADE21BRS', 'blz' => '29250000']);
@@ -146,10 +145,10 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Kreissparkasse Köln', 'long_name' => 'Kreissparkasse Köln', 'association_id' => 4, 'bic' => 'COKSDE33XXX', 'blz' => '37050299 ']);
             Customer::create(['name' => 'Sparkasse Leverkusen', 'long_name' => 'Sparkasse Leverkusen', 'association_id' => 4, 'bic' => 'WELADEDLLEV', 'blz' => '37551440 ']);
             Customer::create(['name' => 'Stadt-Sparkasse Langenfeld', 'long_name' => 'Stadt-Sparkasse Langenfeld', 'association_id' => 4, 'bic' => 'WELADED1LAF', 'blz' => '37551780 ']);
-            Customer::create(['name' => 'Stadtsparkasse Bad Honnef', 'long_name' => 'Stadtsparkasse Bad Honnef', 'association_id' => NULL, 'bic' => 'WELADED1HON', 'blz' => '38051290']);
+            Customer::create(['name' => 'Stadtsparkasse Bad Honnef', 'long_name' => 'Stadtsparkasse Bad Honnef', 'association_id' => null, 'bic' => 'WELADED1HON', 'blz' => '38051290']);
             Customer::create(['name' => 'Kreissparkasse Euskirchen', 'long_name' => 'Kreissparkasse Euskirchen', 'association_id' => 4, 'bic' => 'WELADED1EUS', 'blz' => '38250110']);
             Customer::create(['name' => 'Sparkasse Gummersbach', 'long_name' => 'Sparkasse Gummersbach', 'association_id' => 4, 'bic' => 'WELADED1GMB', 'blz' => '38450000']);
-            Customer::create(['name' => 'Sparkasse der Homburgischen Gemeinden', 'long_name' => 'Sparkasse der Homburgischen Gemeinden', 'association_id' => NULL, 'bic' => 'WELADED1WIE', 'blz' => '38452490']);
+            Customer::create(['name' => 'Sparkasse der Homburgischen Gemeinden', 'long_name' => 'Sparkasse der Homburgischen Gemeinden', 'association_id' => null, 'bic' => 'WELADED1WIE', 'blz' => '38452490']);
             Customer::create(['name' => 'Sparkasse Aachen', 'long_name' => 'Sparkasse Aachen', 'association_id' => 4, 'bic' => 'AACSDE33XXX', 'blz' => '39050000']);
             Customer::create(['name' => 'Sparkasse Düren', 'long_name' => 'Sparkasse Düren', 'association_id' => 4, 'bic' => 'SDUEDE33XXX', 'blz' => '39550110 ']);
             Customer::create(['name' => 'Sparkasse Münsterland Ost', 'long_name' => 'Sparkasse Münsterland Ost', 'association_id' => 13, 'bic' => 'WELADED1MST', 'blz' => '40050150 ']);
@@ -161,10 +160,10 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Hamm', 'long_name' => 'Sparkasse Hamm', 'association_id' => 13, 'bic' => 'WELADED1HAM', 'blz' => '41050095 ']);
             Customer::create(['name' => 'Sparkasse Bergkamen-Bönen', 'long_name' => 'Sparkasse Bergkamen-Bönen', 'association_id' => 13, 'bic' => 'WELADED1BGK', 'blz' => '41051845 ']);
             Customer::create(['name' => 'Sparkasse Beckum-Wadersloh', 'long_name' => 'Sparkasse Beckum-Wadersloh', 'association_id' => 13, 'bic' => 'WELADED1BEK', 'blz' => '41250035 ']);
-            Customer::create(['name' => 'Sparkasse Werl', 'long_name' => 'Sparkasse Werl', 'association_id' => NULL, 'bic' => 'WELADED1SOS', 'blz' => '41451750']);
+            Customer::create(['name' => 'Sparkasse Werl', 'long_name' => 'Sparkasse Werl', 'association_id' => null, 'bic' => 'WELADED1SOS', 'blz' => '41451750']);
             Customer::create(['name' => 'Sparkasse Lippstadt', 'long_name' => 'Sparkasse Lippstadt', 'association_id' => 13, 'bic' => 'WELADED1LIP', 'blz' => '41650001']);
             Customer::create(['name' => 'Sparkasse Hochsauerland', 'long_name' => 'Sparkasse Hochsauerland', 'association_id' => 13, 'bic' => 'WELADED1HSL', 'blz' => '41651770 ']);
-            Customer::create(['name' => 'Sparkasse Erwitte-Anröchte', 'long_name' => 'Sparkasse Erwitte-Anröchte', 'association_id' => NULL, 'bic' => 'KEINEANGABE', 'blz' => '41651815']);
+            Customer::create(['name' => 'Sparkasse Erwitte-Anröchte', 'long_name' => 'Sparkasse Erwitte-Anröchte', 'association_id' => null, 'bic' => 'KEINEANGABE', 'blz' => '41651815']);
             Customer::create(['name' => 'Sparkasse Geseke', 'long_name' => 'Sparkasse Geseke', 'association_id' => 13, 'bic' => 'WELADED1GES', 'blz' => '41651965']);
             Customer::create(['name' => 'Sparkasse Gelsenkirchen', 'long_name' => 'Sparkasse Gelsenkirchen', 'association_id' => 13, 'bic' => 'WELADED1GEK', 'blz' => '42050001 ']);
             Customer::create(['name' => 'Sparkasse Gladbeck', 'long_name' => 'Sparkasse Gladbeck', 'association_id' => 13, 'bic' => 'WELADED1GLA', 'blz' => '42450040']);
@@ -182,7 +181,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Märkisches Sauerland Hemer-Menden', 'long_name' => 'Sparkasse Märkisches Sauerland Hemer-Menden', 'association_id' => 13, 'bic' => 'WELADED1HEM', 'blz' => '44551210']);
             Customer::create(['name' => 'Sparkasse an Volme und Ruhr', 'long_name' => 'Sparkasse an Volme und Ruhr', 'association_id' => 13, 'bic' => 'WELADE3HXXX', 'blz' => '45050001']);
             Customer::create(['name' => 'Sparkasse Witten', 'long_name' => 'Sparkasse Witten', 'association_id' => 13, 'bic' => 'WELADED1WTN', 'blz' => '45250035 ']);
-            Customer::create(['name' => 'Stadtsparkasse Wetter', 'long_name' => 'Stadtsparkasse Wetter', 'association_id' => NULL, 'bic' => 'KEINEANGABE', 'blz' => '45251480']);
+            Customer::create(['name' => 'Stadtsparkasse Wetter', 'long_name' => 'Stadtsparkasse Wetter', 'association_id' => null, 'bic' => 'KEINEANGABE', 'blz' => '45251480']);
             Customer::create(['name' => 'Stadtsparkasse Sprockhövel', 'long_name' => 'Stadtsparkasse Sprockhövel', 'association_id' => 13, 'bic' => 'SPSHDE31XXX', 'blz' => '45251515']);
             Customer::create(['name' => 'Sparkasse an Ennepe und Ruhr', 'long_name' => 'Sparkasse an Ennepe und Ruhr', 'association_id' => 13, 'bic' => 'WELADED1GEV', 'blz' => '45450050 ']);
             Customer::create(['name' => 'Sparkasse Ennepetal-Breckerfeld', 'long_name' => 'Sparkasse Ennepetal-Breckerfeld', 'association_id' => 13, 'bic' => 'WELADED1ENE', 'blz' => '45451060 ']);
@@ -192,12 +191,12 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Kierspe-Meinerzhagen', 'long_name' => 'Sparkasse Kierspe-Meinerzhagen', 'association_id' => 13, 'bic' => 'WELADED1KMZ', 'blz' => '45851665 ']);
             Customer::create(['name' => 'Sparkasse Siegen', 'long_name' => 'Sparkasse Siegen', 'association_id' => 13, 'bic' => 'WELADED1SIE', 'blz' => '46050001 ']);
             Customer::create(['name' => 'Sparkasse Burbach-Neunkirchen', 'long_name' => 'Sparkasse Burbach-Neunkirchen', 'association_id' => 13, 'bic' => 'WELADED1BUB', 'blz' => '46051240']);
-            Customer::create(['name' => 'Stadtsparkasse Freudenberg', 'long_name' => 'Stadtsparkasse Freudenberg', 'association_id' => NULL, 'bic' => 'KEINEANGABE', 'blz' => '46051733']);
-            Customer::create(['name' => 'Stadtsparkasse Hilchenbach', 'long_name' => 'Stadtsparkasse Hilchenbach', 'association_id' => NULL, 'bic' => 'WELADED1HIL', 'blz' => '46051875']);
-            Customer::create(['name' => 'Stadtsparkasse Schmallenberg', 'long_name' => 'Stadtsparkasse Schmallenberg', 'association_id' => NULL, 'bic' => 'WELADED1SMB', 'blz' => '46052855']);
+            Customer::create(['name' => 'Stadtsparkasse Freudenberg', 'long_name' => 'Stadtsparkasse Freudenberg', 'association_id' => null, 'bic' => 'KEINEANGABE', 'blz' => '46051733']);
+            Customer::create(['name' => 'Stadtsparkasse Hilchenbach', 'long_name' => 'Stadtsparkasse Hilchenbach', 'association_id' => null, 'bic' => 'WELADED1HIL', 'blz' => '46051875']);
+            Customer::create(['name' => 'Stadtsparkasse Schmallenberg', 'long_name' => 'Stadtsparkasse Schmallenberg', 'association_id' => null, 'bic' => 'WELADED1SMB', 'blz' => '46052855']);
             Customer::create(['name' => 'Sparkasse Wittgenstein', 'long_name' => 'Sparkasse Wittgenstein', 'association_id' => 13, 'bic' => 'WELADED1BEB', 'blz' => '46053480 ']);
             Customer::create(['name' => 'Sparkasse Olpe-Drolshagen-Wenden', 'long_name' => 'Sparkasse Olpe-Drolshagen-Wenden', 'association_id' => 13, 'bic' => 'WELADED1OPE', 'blz' => '46250049']);
-            Customer::create(['name' => 'Sparkasse Finnentrop', 'long_name' => 'Sparkasse Finnentrop', 'association_id' => NULL, 'bic' => 'WELADED1FTR', 'blz' => '46251590']);
+            Customer::create(['name' => 'Sparkasse Finnentrop', 'long_name' => 'Sparkasse Finnentrop', 'association_id' => null, 'bic' => 'WELADED1FTR', 'blz' => '46251590']);
             Customer::create(['name' => 'Sparkasse Attendorn-Lennestadt-Kirchhundem', 'long_name' => 'Sparkasse Attendorn-Lennestadt-Kirchhundem', 'association_id' => 13, 'bic' => 'WELADED1ALK', 'blz' => '46251630 ']);
             Customer::create(['name' => 'Sparkasse Mitten im Sauerland', 'long_name' => 'Sparkasse Mitten im Sauerland', 'association_id' => 13, 'bic' => 'WELADED1MES', 'blz' => '46451012']);
             Customer::create(['name' => 'Sparkasse Arnsberg-Sundern', 'long_name' => 'Sparkasse Arnsberg-Sundern', 'association_id' => 13, 'bic' => 'WELADED1ARN', 'blz' => '46650005 ']);
@@ -214,7 +213,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Minden-Lübbecke', 'long_name' => 'Sparkasse Minden-Lübbecke', 'association_id' => 13, 'bic' => 'WELADED1MIN', 'blz' => '49050101 ']);
             Customer::create(['name' => 'Stadtsparkasse Rahden', 'long_name' => 'Stadtsparkasse Rahden', 'association_id' => 13, 'bic' => 'WELADED1RHD', 'blz' => '49051065']);
             Customer::create(['name' => 'Sparkasse Bad Oeynhausen - Porta Westfalica', 'long_name' => 'Sparkasse Bad Oeynhausen - Porta Westfalica', 'association_id' => 13, 'bic' => 'WELADED1OEH', 'blz' => '49051285 ']);
-            Customer::create(['name' => 'Stadtsparkasse Porta Westfalica', 'long_name' => 'Stadtsparkasse Porta Westfalica', 'association_id' => NULL, 'bic' => 'KEINEANGABE', 'blz' => '49051990']);
+            Customer::create(['name' => 'Stadtsparkasse Porta Westfalica', 'long_name' => 'Stadtsparkasse Porta Westfalica', 'association_id' => null, 'bic' => 'KEINEANGABE', 'blz' => '49051990']);
             Customer::create(['name' => 'Sparkasse Herford', 'long_name' => 'Sparkasse Herford', 'association_id' => 13, 'bic' => 'WLAHDE44XXX', 'blz' => '49450120']);
             Customer::create(['name' => '1822direkt Gesellschaft d. Frankfurter Sparkasse mbH', 'long_name' => '1822direkt Gesellschaft d. Frankfurter Sparkasse mbH', 'association_id' => 15, 'bic' => 'HELADEF1822', 'blz' => '']);
             Customer::create(['name' => 'Städtische Sparkasse Offenbach a. M.', 'long_name' => 'Städtische Sparkasse Offenbach a. M.', 'association_id' => 5, 'bic' => 'HELADEF1OFF', 'blz' => '50550020']);
@@ -239,7 +238,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Oberhessen', 'long_name' => 'Sparkasse Oberhessen', 'association_id' => 5, 'bic' => 'HELADEF1FRI', 'blz' => '51850079']);
             Customer::create(['name' => 'Kasseler Sparkasse', 'long_name' => 'Kasseler Sparkasse', 'association_id' => 5, 'bic' => 'HELADEF1KAS', 'blz' => '52050353 ']);
             Customer::create(['name' => 'Stadtsparkasse Borken (Hessen)', 'long_name' => 'Stadtsparkasse Borken (Hessen)', 'association_id' => 5, 'bic' => 'HELADEF1BOR', 'blz' => '52051373']);
-            Customer::create(['name' => 'Stadtsparkasse Felsberg', 'long_name' => 'Stadtsparkasse Felsberg', 'association_id' => NULL, 'bic' => 'KEINEANGABE', 'blz' => '52051555']);
+            Customer::create(['name' => 'Stadtsparkasse Felsberg', 'long_name' => 'Stadtsparkasse Felsberg', 'association_id' => null, 'bic' => 'KEINEANGABE', 'blz' => '52051555']);
             Customer::create(['name' => 'Stadtsparkasse Grebenstein', 'long_name' => 'Stadtsparkasse Grebenstein', 'association_id' => 5, 'bic' => 'HELADEF1GRE', 'blz' => '52051877']);
             Customer::create(['name' => 'Kreissparkasse Schwalm-Eder', 'long_name' => 'Kreissparkasse Schwalm-Eder', 'association_id' => 5, 'bic' => 'HELADEF1MEG', 'blz' => '52052154']);
             Customer::create(['name' => 'Stadtsparkasse Schwalmstadt', 'long_name' => 'Stadtsparkasse Schwalmstadt', 'association_id' => 5, 'bic' => 'HELADEF1SWA', 'blz' => '52053458 ']);
@@ -349,7 +348,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Ingolstadt Eichstätt', 'long_name' => 'Sparkasse Ingolstadt Eichstätt', 'association_id' => 7, 'bic' => 'BYLADEM1ING', 'blz' => '72150000 ']);
             Customer::create(['name' => 'Sparkasse Pfaffenhofen', 'long_name' => 'Sparkasse Pfaffenhofen', 'association_id' => 7, 'bic' => 'BYLADEM1PAF', 'blz' => '72151650']);
             Customer::create(['name' => 'Sparkasse Neuburg-Rain', 'long_name' => 'Sparkasse Neuburg-Rain', 'association_id' => 7, 'bic' => 'BYLADEM1NEB', 'blz' => '72152070 ']);
-            Customer::create(['name' => 'Sparkasse Nördlingen', 'long_name' => 'Sparkasse Nördlingen', 'association_id' => NULL, 'bic' => 'BYLADEM1NLG', 'blz' => '72250000']);
+            Customer::create(['name' => 'Sparkasse Nördlingen', 'long_name' => 'Sparkasse Nördlingen', 'association_id' => null, 'bic' => 'BYLADEM1NLG', 'blz' => '72250000']);
             Customer::create(['name' => 'Sparkasse Donauwörth', 'long_name' => 'Sparkasse Donauwörth', 'association_id' => 7, 'bic' => 'BYLADEM1DON', 'blz' => '72250160 ']);
             Customer::create(['name' => 'Sparkasse Dillingen-Nördlingen', 'long_name' => 'Sparkasse Dillingen-Nördlingen', 'association_id' => 7, 'bic' => 'BYLADEM1DLG', 'blz' => '72251520']);
             Customer::create(['name' => 'Sparkasse Neu-Ulm - Illertissen', 'long_name' => 'Sparkasse Neu-Ulm - Illertissen', 'association_id' => 7, 'bic' => 'BYLADEM1NUL', 'blz' => '73050000']);
@@ -377,7 +376,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse im Landkreis Neustadt a. d. Aisch - Bad Windsheim', 'long_name' => 'Sparkasse im Landkreis Neustadt a. d. Aisch - Bad Windsheim', 'association_id' => 7, 'bic' => 'BYLADEM1NEA', 'blz' => '76251020']);
             Customer::create(['name' => 'Stadt- und Kreissparkasse Erlangen Höchstadt Herzogenaurach', 'long_name' => 'Stadt- und Kreissparkasse Erlangen Höchstadt Herzogenaurach', 'association_id' => 7, 'bic' => 'BYLADEM1ERH', 'blz' => '76350000']);
             Customer::create(['name' => 'Sparkasse Forchheim', 'long_name' => 'Sparkasse Forchheim', 'association_id' => 7, 'bic' => 'BYLADEM1FOR', 'blz' => '76351040']);
-            Customer::create(['name' => 'Kreissparkasse Höchstadt', 'long_name' => 'Kreissparkasse Höchstadt', 'association_id' => NULL, 'bic' => 'KEINEANGABE', 'blz' => '76351560']);
+            Customer::create(['name' => 'Kreissparkasse Höchstadt', 'long_name' => 'Kreissparkasse Höchstadt', 'association_id' => null, 'bic' => 'KEINEANGABE', 'blz' => '76351560']);
             Customer::create(['name' => 'Sparkasse Mittelfranken-Süd', 'long_name' => 'Sparkasse Mittelfranken-Süd', 'association_id' => 7, 'bic' => 'BYLADEM1SRS', 'blz' => '76450000 ']);
             Customer::create(['name' => 'Sparkasse Ansbach', 'long_name' => 'Sparkasse Ansbach', 'association_id' => 7, 'bic' => 'BYLADEM1ANS', 'blz' => '76550000']);
             Customer::create(['name' => 'Vereinigte Sparkassen Gunzenhausen', 'long_name' => 'Vereinigte Sparkassen Gunzenhausen', 'association_id' => 7, 'bic' => 'BYLADEM1GUN', 'blz' => '76551540']);
@@ -388,7 +387,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Sparkasse Mainfranken Würzburg', 'long_name' => 'Sparkasse Mainfranken Würzburg', 'association_id' => 7, 'bic' => 'BYLADEM1SWU', 'blz' => '79050000 ']);
             Customer::create(['name' => 'Sparkasse Schweinfurt-Haßberge', 'long_name' => 'Sparkasse Schweinfurt-Haßberge', 'association_id' => 7, 'bic' => 'BYLADEM1KSW', 'blz' => '79350101']);
             Customer::create(['name' => 'Sparkasse Bad Kissingen', 'long_name' => 'Sparkasse Bad Kissingen', 'association_id' => 7, 'bic' => 'BYLADEM1KIS', 'blz' => '79351010']);
-            Customer::create(['name' => 'Sparkasse Ostunterfranken', 'long_name' => 'Sparkasse Ostunterfranken', 'association_id' => NULL, 'bic' => 'KEINEANGABE', 'blz' => '79351730']);
+            Customer::create(['name' => 'Sparkasse Ostunterfranken', 'long_name' => 'Sparkasse Ostunterfranken', 'association_id' => null, 'bic' => 'KEINEANGABE', 'blz' => '79351730']);
             Customer::create(['name' => 'Sparkasse Bad Neustadt a. d. Saale', 'long_name' => 'Sparkasse Bad Neustadt a. d. Saale', 'association_id' => 7, 'bic' => 'BYLADEM1NES', 'blz' => '79353090 ']);
             Customer::create(['name' => 'Sparkasse Aschaffenburg-Alzenau', 'long_name' => 'Sparkasse Aschaffenburg-Alzenau', 'association_id' => 7, 'bic' => 'BYLADEM1ASA', 'blz' => '79550000']);
             Customer::create(['name' => 'Sparkasse Miltenberg-Obernburg', 'long_name' => 'Sparkasse Miltenberg-Obernburg', 'association_id' => 7, 'bic' => 'BYLADEM1MIL', 'blz' => '79650000']);
@@ -432,7 +431,7 @@ class InstituteSeeder extends Seeder
             Customer::create(['name' => 'Erzgebirgssparkasse', 'long_name' => 'Erzgebirgssparkasse', 'association_id' => 3, 'bic' => 'WELADED1STB', 'blz' => '87054000']);
             Customer::create(['name' => 'Sparkasse Zwickau', 'long_name' => 'Sparkasse Zwickau', 'association_id' => 3, 'bic' => 'WELADED1ZWI', 'blz' => '87055000']);
             Customer::create(['name' => 'Sparkasse Vogtland', 'long_name' => 'Sparkasse Vogtland', 'association_id' => 3, 'bic' => 'WELADED1PLX', 'blz' => '87058000 ']);
-            Customer::create(['name' => 'Niederrheinische Sparkasse RheinLippe', 'long_name' => 'Niederrheinische Sparkasse RheinLippe', 'association_id' => NULL, 'bic' => 'KEINEANGABE', 'blz' => '0']);
+            Customer::create(['name' => 'Niederrheinische Sparkasse RheinLippe', 'long_name' => 'Niederrheinische Sparkasse RheinLippe', 'association_id' => null, 'bic' => 'KEINEANGABE', 'blz' => '0']);
             Customer::create(['name' => 'Baden-Württembergische Bank', 'long_name' => 'Baden-Württembergische Bank', 'association_id' => 15, 'bic' => 'SOLADEST600', 'blz' => '60050101']);
             Customer::create(['name' => 'Berliner Sparkasse', 'long_name' => 'Berliner Sparkasse', 'association_id' => 3, 'bic' => 'BELADEBEXXX', 'blz' => '10050000']);
             Customer::create(['name' => 'NORD/LB Norddeutsche Landesbank Girozentrale', 'long_name' => 'NORD/LB Norddeutsche Landesbank Girozentrale', 'association_id' => 15, 'bic' => 'NOLADE2HXXX', 'blz' => '25050000']);

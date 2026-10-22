@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddIsCampaignImageToFiles extends Migration
 {
@@ -15,9 +15,9 @@ class AddIsCampaignImageToFiles extends Migration
     {
         Schema::table('files', function (Blueprint $table) {
             $table->integer('measure_id')->nullable()->change();
-            $table->boolean("is_promotion_package")->nullable()->change();
-            $table->boolean("is_measure_image")->nullable()->change();
-            $table->boolean("is_campaign_image")->default(false)->after('is_measure_image');
+            $table->boolean('is_promotion_package')->nullable()->change();
+            $table->boolean('is_measure_image')->nullable()->change();
+            $table->boolean('is_campaign_image')->default(false)->after('is_measure_image');
         });
     }
 

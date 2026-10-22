@@ -1,17 +1,13 @@
 <?php
 
-
 namespace App\Exports;
-
 
 use App\Enums\Variables;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class CustomerExcelExport implements WithHeadings, FromCollection
+class CustomerExcelExport implements FromCollection, WithHeadings
 {
     use Exportable;
 
@@ -49,7 +45,7 @@ class CustomerExcelExport implements WithHeadings, FromCollection
             foreach ($customer->measures()->get() as $customerMeasure) {
                 $measureName = $customerMeasure->measure->name;
                 $measureStatus = Variables::$measuresStates['states'][$customerMeasure->state]['name'];
-                $measuresArray[] = $measureName . ', Status: ' . $measureStatus;
+                $measuresArray[] = $measureName.', Status: '.$measureStatus;
             }
 
             $measuresString = implode('; ', $measuresArray);
@@ -68,8 +64,6 @@ class CustomerExcelExport implements WithHeadings, FromCollection
         return collect($rows);
     }
 
-// ...
-
-
+    // ...
 
 }

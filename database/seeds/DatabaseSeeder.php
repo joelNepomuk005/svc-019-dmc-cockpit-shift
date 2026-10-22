@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\ContactType;
-use App\Models\JobTitle;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

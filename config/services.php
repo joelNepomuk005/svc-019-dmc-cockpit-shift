@@ -48,7 +48,7 @@ return [
         'client_id' => env('SCOCKPIT_CLIENT_ID'),
         'client_secret' => env('SCOCKPIT_CLIENT_SECRET'),
         'redirect' => env('SCOCKPIT_REDIRECT'),
-        'api_url' => env('SCOCKPIT_API')
+        'api_url' => env('SCOCKPIT_API'),
     ],
 
 ];

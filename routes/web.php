@@ -36,7 +36,6 @@ Route::view('/datenschutz', 'shared.privacy')->name('shared.privacy');
 /**
  * Backend
  */
-
 if (env('APP_ENV') == 'local' && env('SCOCKPIT_SKIP_AUTH') == true) {
     \Auth::loginUsingId(1);
 }
@@ -205,6 +204,5 @@ Route::group(['middleware' => ['auth']], function () {
             });
         });
     });
-
 
 });

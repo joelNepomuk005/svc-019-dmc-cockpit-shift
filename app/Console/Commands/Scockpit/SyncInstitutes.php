@@ -56,11 +56,11 @@ class SyncInstitutes extends Command
             if ($model === null) {
                 Institute::create($payload);
 
-                $this->info("Institute: „" . $institute['name'] . "“ created");
+                $this->info('Institute: „'.$institute['name'].'“ created');
             } else {
                 $model->update($payload);
 
-                $this->info("Institute: „" . $institute['name'] . "“ updated");
+                $this->info('Institute: „'.$institute['name'].'“ updated');
             }
 
         }

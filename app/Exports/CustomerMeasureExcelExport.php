@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Exports;
-
 
 use App\Models\Customer;
 use App\Models\Measures;
@@ -11,7 +9,7 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class CustomerMeasureExcelExport implements WithHeadings, FromArray, WithCustomCsvSettings
+class CustomerMeasureExcelExport implements FromArray, WithCustomCsvSettings, WithHeadings
 {
     use Exportable;
 
@@ -20,12 +18,9 @@ class CustomerMeasureExcelExport implements WithHeadings, FromArray, WithCustomC
     public function __construct(Measures $measure)
     {
 
-        if(in_array(0, $measure->customer_ids))
-        {
+        if (in_array(0, $measure->customer_ids)) {
             $customers = \App\Models\Customer::all();
-        }
-        else
-        {
+        } else {
             $customers = Customer::whereIn('id', $measure->customer_ids)->get();
         }
         foreach ($customers as $customer) {
@@ -33,8 +28,8 @@ class CustomerMeasureExcelExport implements WithHeadings, FromArray, WithCustomC
                 $customer->name,
                 $measure->excelExportMeasureState($customer->id),
                 $measure->customerMeasure($customer->id) ? $measure->customerMeasure($customer->id)->causer()->name : ' - ',
-                !empty($measure->from) ? $measure->from->format('d.m.Y') : '- keine Angabe -',
-                !empty($measure->to) ? $measure->to->format('d.m.Y') : '- keine Angabe -',
+                ! empty($measure->from) ? $measure->from->format('d.m.Y') : '- keine Angabe -',
+                ! empty($measure->to) ? $measure->to->format('d.m.Y') : '- keine Angabe -',
                 $measure->incentivization == 1 ? 'Ja' : 'Nein',
                 $measure->coupons == 1 ? 'Ja' : 'Nein',
             ];

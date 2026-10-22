@@ -1,12 +1,9 @@
 <?php
 
-
 namespace App\Http\Sorts;
-
 
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Builder;
-
 
 class AcquisitionCustomerBlzSort implements \Spatie\QueryBuilder\Sorts\Sort
 {

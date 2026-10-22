@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -43,11 +42,11 @@ class ResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('DMC-Cockpit - Passwortanforderung')
-                    ->line('Sie haben ein neues Passwort für Ihr Benutzerkonto angefordert. Mit „Passwort zurücksetzen“ können Sie sich ein neues Passwort vergeben.')
-                    ->action('Passwort zurücksetzen', url('password/reset', $this->token))
-                    ->line('Der Link zum Passwort zurücksetzen ist für 60 Minuten aktiv.')
-                    ->line('Wenn Sie nicht die Zurücksetzung Ihres Passworts beantragt haben, sind Ihrerseits keine weiteren Schritte erforderlich. ');
+            ->subject('DMC-Cockpit - Passwortanforderung')
+            ->line('Sie haben ein neues Passwort für Ihr Benutzerkonto angefordert. Mit „Passwort zurücksetzen“ können Sie sich ein neues Passwort vergeben.')
+            ->action('Passwort zurücksetzen', url('password/reset', $this->token))
+            ->line('Der Link zum Passwort zurücksetzen ist für 60 Minuten aktiv.')
+            ->line('Wenn Sie nicht die Zurücksetzung Ihres Passworts beantragt haben, sind Ihrerseits keine weiteren Schritte erforderlich. ');
     }
 
     /**

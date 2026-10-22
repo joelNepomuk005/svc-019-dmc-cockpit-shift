@@ -9,7 +9,7 @@ class CampaignParticipants extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'campaign_id','start_date','end_date', 'blz'];
+    protected $fillable = ['customer_id', 'campaign_id', 'start_date', 'end_date', 'blz'];
 
     protected $casts = [
         'name' => 'string',

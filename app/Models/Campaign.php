@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use DateTimeInterface;
 
 class Campaign extends Model
 {
@@ -28,5 +28,4 @@ class Campaign extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
 }

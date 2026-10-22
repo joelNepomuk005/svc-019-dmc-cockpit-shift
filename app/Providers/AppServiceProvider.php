@@ -14,8 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (in_array(\Request::ip(), ['127.0.0.1', '80.154.74.243']))
-        {
+        if (in_array(\Request::ip(), ['127.0.0.1', '80.154.74.243'])) {
             config(['app.debug' => true]);
         }
     }

@@ -1,15 +1,11 @@
 <?php
 
-
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\Api\NoteResponse;
 use App\Http\Resources\Api\UserCategoriesResponse;
 use App\UserCategories;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\QueryBuilder;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserCategoriesController extends ApiController
 {
@@ -26,7 +22,6 @@ class UserCategoriesController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -38,6 +33,7 @@ class UserCategoriesController extends ApiController
             'updated_at' => 'required',
         ]);
         $userCategories = UserCategories::create($data);
+
         return UserCategoriesResponse::make($userCategories);
 
     }
@@ -45,7 +41,7 @@ class UserCategoriesController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -54,14 +50,14 @@ class UserCategoriesController extends ApiController
         if ($UserCategories == null) {
             return $this->notFoundResponse($id);
         }
+
         return UserCategoriesResponse::make($UserCategories);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -72,7 +68,7 @@ class UserCategoriesController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

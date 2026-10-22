@@ -20,5 +20,3 @@ class AddUuidToCampaignsTable extends Migration
         });
     }
 }
-
-

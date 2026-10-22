@@ -17,7 +17,6 @@ Breadcrumbs::for('backend.campaigns', function ($trail) {
     $trail->push('Wettbewerb', route('backend.campaigns.index'));
 });
 
-
 // CustomerContacts
 Breadcrumbs::for('backend.contacts', function ($trail) {
     $trail->parent('home');
@@ -34,7 +33,7 @@ Breadcrumbs::for('backend.measures', function ($trail) {
 Breadcrumbs::for('backend.measures.edit', function ($trail, $measure = false) {
     $trail->parent('home');
     $trail->push('Maßnahmen', route('backend.measures.index'));
-    $trail->push($measure->name . ' (#' . $measure->id . ')');
+    $trail->push($measure->name.' (#'.$measure->id.')');
 });
 
 // Users
@@ -46,13 +45,13 @@ Breadcrumbs::for('backend.users', function ($trail) {
 // Customer > Show
 Breadcrumbs::for('backend.customer.show', function ($trail, $customer) {
     $trail->parent('home');
-    $trail->push($customer->name . ' (' . $customer->blz . ')');
+    $trail->push($customer->name.' ('.$customer->blz.')');
 });
 
 // Customer > Edit
 Breadcrumbs::for('backend.customer.edit', function ($trail, $customer) {
     $trail->parent('home');
-    $trail->push('Bearbeiten: ' . $customer->name . ' (' . $customer->blz . ')');
+    $trail->push('Bearbeiten: '.$customer->name.' ('.$customer->blz.')');
 });
 
 // Customers > Edit / Create
@@ -63,7 +62,7 @@ Breadcrumbs::for('backend.customer.crud', function ($trail, $customer = false) {
         if ($customer == 'create') {
             $trail->push('Neues Institut anlegen');
         } else {
-            $trail->push($customer->name . ' (' . $customer->blz . ')', route('backend.customers.edit', $customer));
+            $trail->push($customer->name.' ('.$customer->blz.')', route('backend.customers.edit', $customer));
         }
     }
 });

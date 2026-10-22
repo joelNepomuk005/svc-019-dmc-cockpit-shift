@@ -1,22 +1,18 @@
 <?php
 
-
 namespace App\Http\Sorts;
-
 
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Builder;
-
 
 class AcquisitionCustomerNameSort implements \Spatie\QueryBuilder\Sorts\Sort
 {
     public function __invoke(Builder $query, bool $descending, string $property)
     {
 
-           $direction = $descending ? 'DESC' : 'ASC';
+        $direction = $descending ? 'DESC' : 'ASC';
 
         $query->orderBy(Customer::select('name')->whereColumn('customer_acquisitions.customer_id', 'customers.id'), $direction);
-
 
     }
 }

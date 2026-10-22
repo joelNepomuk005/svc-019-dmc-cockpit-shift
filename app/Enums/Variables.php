@@ -8,23 +8,20 @@ class Variables
         'states' => [
             'open' => [
                 'name' => 'offen',
-                'badge' => 'bg-info'
+                'badge' => 'bg-info',
             ],
             'planned' => [
                 'name' => 'teilnehmend',
-                'badge' => 'bg-success'
+                'badge' => 'bg-success',
             ],
             'done' => [
                 'name' => 'abgeschlossen',
-                'badge' => 'bg-danger'
+                'badge' => 'bg-danger',
             ],
             'closed' => [
                 'name' => 'abgemeldet',
-                'badge' => 'bg-info'
+                'badge' => 'bg-info',
             ],
         ],
     ];
-
 }
-
-?>

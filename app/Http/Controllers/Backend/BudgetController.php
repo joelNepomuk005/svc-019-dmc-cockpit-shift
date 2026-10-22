@@ -10,10 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
 {
-    public function index(Request $request)
-    {
-
-    }
+    public function index(Request $request) {}
 
     public function createCustomer(Request $request, CustomerBudget $budget, Customer $customer, $type)
     {
@@ -28,7 +25,7 @@ class BudgetController extends Controller
 
     }
 
-    public function show (Request $request, Customer $customer, CustomerBudget $budget)
+    public function show(Request $request, Customer $customer, CustomerBudget $budget)
     {
         $modal = 'show';
 
@@ -41,14 +38,13 @@ class BudgetController extends Controller
 
     }
 
-    public function storeCustomer (Request $request, Customer $customer, $type)
+    public function storeCustomer(Request $request, Customer $customer, $type)
     {
         $payload = $request->validate([
             'amount' => 'required',
             'note' => 'required',
             'measure_id' => 'nullable',
         ]);
-
 
         $payload['user_id'] = Auth::user()->id;
         $payload['customer_id'] = $customer->id;
@@ -66,7 +62,7 @@ class BudgetController extends Controller
 
     }
 
-    public function updateCustomer (Request $request, Customer $customer, CustomerBudget $budget, $type)
+    public function updateCustomer(Request $request, Customer $customer, CustomerBudget $budget, $type)
     {
         $payload = $request->validate([
             'amount' => 'required',
@@ -90,7 +86,7 @@ class BudgetController extends Controller
 
     }
 
-    public function editCustomer (Request $request, Customer $customer, CustomerBudget $budget, $type)
+    public function editCustomer(Request $request, Customer $customer, CustomerBudget $budget, $type)
     {
         $modal = 'update';
 
@@ -103,7 +99,8 @@ class BudgetController extends Controller
 
     }
 
-    public function destroy (Request $request, Customer $customer, CustomerBudget $budget) {
+    public function destroy(Request $request, Customer $customer, CustomerBudget $budget)
+    {
         $budget->delete();
 
         toastr()->success('Das Budget wurde erfolgreich gelöscht.');

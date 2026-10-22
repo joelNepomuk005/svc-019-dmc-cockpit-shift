@@ -12,20 +12,23 @@ class CustomerBudget extends Model
     use HasFactory, LogsActivity, SoftDeletes;
 
     protected $fillable = [
-        'customer_id', 'amount', 'note', 'user_id', 'measure_id', 'budget_type'
+        'customer_id', 'amount', 'note', 'user_id', 'measure_id', 'budget_type',
     ];
 
     protected static $logAttributes = ['*'];
 
-    public function user () {
+    public function user()
+    {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function measure () {
+    public function measure()
+    {
         return $this->hasOne(Measures::class, 'id', 'measure_id');
     }
 
-    public function budgetFormatted () {
+    public function budgetFormatted()
+    {
         return number_format($this->amount, 2, ',', '.');
     }
 }

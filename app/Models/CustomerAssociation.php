@@ -11,6 +11,6 @@ class CustomerAssociation extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 'short_name'
+        'name', 'short_name',
     ];
 }

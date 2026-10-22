@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class CustomerContact
- * @package App
  */
 class CustomerContact extends Model
 {
@@ -24,12 +23,12 @@ class CustomerContact extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'user_id', 'user_id_log', 'date', 'customer_id', 'contact_type_id', 'contact_person_id'
+        'title', 'user_id', 'user_id_log', 'date', 'customer_id', 'contact_type_id', 'contact_person_id',
     ];
 
     protected $casts = [
         'date' => 'date',
-        'contact_type_id' => 'integer'
+        'contact_type_id' => 'integer',
     ];
 
     /**
@@ -43,22 +42,22 @@ class CustomerContact extends Model
     public function contact_type()
     {
 
-       return  $this->hasOne(ContactType::class, 'id', 'contact_type_id');
+        return $this->hasOne(ContactType::class, 'id', 'contact_type_id');
 
     }
 
-    public function user () {
+    public function user()
+    {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function scopeCustomSearch(Builder $query, $search)
     {
-        $query->orWhere('title', 'LIKE', '%' . $search . '%');
+        $query->orWhere('title', 'LIKE', '%'.$search.'%');
     }
 
     public function scopeDate(Builder $query, $date): Builder
     {
         return $query->whereDate('date', '=', Carbon::parse($date));
     }
-
 }
