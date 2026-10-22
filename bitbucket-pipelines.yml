@@ -1,0 +1,57 @@
+image: php:8.1
+
+sharedSteps:
+  - composerinstall: &composerinstall
+      name: Composer install
+      size: 2x
+      caches:
+        - composer
+      script:
+        - apt-get update && apt-get install -qy git curl libmcrypt-dev zip unzip libzip-dev zlib1g-dev libmagickwand-dev libmagickcore-dev libpng-dev
+        #- yes | pecl install mcrypt-1.0.4
+        - docker-php-ext-install pdo_mysql exif pcntl gd
+        - docker-php-ext-install zip
+        - pecl install imagick
+        - docker-php-ext-enable imagick
+        - docker-php-ext-enable zip
+        - curl -sS https://getcomposer.org/download/latest-2.2.x/composer.phar > composer.phar
+        - php -d memory_limit=-1 ./composer.phar install
+        - php -d memory_limit=-1 ./composer.phar dump-autoload
+      artifacts:
+        - vendor/**
+#  - npminstall: &npminstall
+#      name: NPM install
+#      image: node:14.15.4
+#      script:
+#        - npm install
+#        - npm run production
+#      artifacts:
+#        - public/styles/**
+#        - public/scripts/**
+
+pipelines:
+  branches:
+    production:
+      - step: *composerinstall
+      #      - step: *npminstall
+      - step:
+          name: Deployment to production
+          script:
+            - apt-get update && apt-get install -y -qq ssh sshpass rsync
+            - export DEPLOY_DIR=$DEPLOY_DIR
+            - export PHP_BIN=/vrmd/webserver/php81/bin/php-cli
+            - echo "Remove meta data"
+            - rm -rf .git .gitattributes .gitignore deployconfig.yml .phpstorm.meta.php _ide_helper.php .editorconfig phpunit.xml README.MD .env.example
+            - rm -rf node_modules commercial_modules
+            - echo "Deploy to Server ($SFTP_HOST)"
+            - sshpass -p "$SFTP_PASSWORD" ssh -p $SFTP_PORT $SFTP_USERNAME@$SFTP_HOST "mkdir -p $DEPLOY_DIR"
+            - sshpass -p "$SFTP_PASSWORD" rsync -zrSlh --stats --port=$SFTP_PORT $BITBUCKET_CLONE_DIR/ $SFTP_USERNAME@$SFTP_HOST:$DEPLOY_DIR
+            - echo "Link storage"
+            - sshpass -p "$SFTP_PASSWORD" ssh -p $SFTP_PORT $SFTP_USERNAME@$SFTP_HOST "cd $DEPLOY_DIR && $PHP_BIN artisan storage:link"
+            - echo "Clear caches"
+            - sshpass -p "$SFTP_PASSWORD" ssh -p $SFTP_PORT $SFTP_USERNAME@$SFTP_HOST "cd $DEPLOY_DIR && $PHP_BIN artisan cache:clear"
+            - sshpass -p "$SFTP_PASSWORD" ssh -p $SFTP_PORT $SFTP_USERNAME@$SFTP_HOST "cd $DEPLOY_DIR && $PHP_BIN artisan config:clear"
+            - sshpass -p "$SFTP_PASSWORD" ssh -p $SFTP_PORT $SFTP_USERNAME@$SFTP_HOST "cd $DEPLOY_DIR && $PHP_BIN artisan view:clear"
+            - echo "Database migration"
+            - sshpass -p "$SFTP_PASSWORD" ssh -p $SFTP_PORT $SFTP_USERNAME@$SFTP_HOST "cd $DEPLOY_DIR && $PHP_BIN artisan migrate --force"
+            - echo "Deployment done ✌️"

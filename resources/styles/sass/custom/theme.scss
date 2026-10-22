@@ -1,0 +1,254 @@
+
+/** *********************************************************************** **/
+
+/**
+ *
+ */
+
+.btn-dashboard {
+  text-align: -webkit-right;
+}
+.nav-pills {
+  .nav-link {
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    border-radius: 2px;
+    color: #666;
+    text-align: center;
+  }
+
+  .nav-link.active {
+    background-color: #666!important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+    color: #fff;
+  }
+
+  li {
+    padding: 0.6rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .modal-xl {
+    max-width: 1340px;
+  }
+}
+
+.nav-pills .nav-link:hover, .nav-pills .nav-link:hover:after, .rgba-grey-light, .rgba-grey-light:after {
+  background-color: hsla(0,0%,62%,.3);
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+.dropdown-menu.show {
+  z-index: 9999999;
+}
+#chartdiv {
+  width: 100%;
+  height: 400px;
+}
+
+input.form-control.form-control.input {
+  background-color: #ffffff !important;
+  border: 1px solid #cccccc;
+  border-radius: 0.25rem;
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%) !important;
+}
+
+
+.date-range {
+  color: #000;
+  background-color: #f3f3f3 !important;
+  border-color: #f2f2f2  !important;
+}
+
+
+.badge-primary {
+  color: #fff;
+  background-color: #007bff;
+}
+
+.badge-danger {
+  color: white;
+  background-color: #dc3545;
+}
+
+button.swal2-confirm.btn.btn-success.text-white {
+  margin-left: 15px;
+}
+
+dl.highlight-dd dd {
+  border-bottom: 1px solid #f0f0f0;
+  font-weight: 400;
+}
+
+dl.highlight-dd dt {
+  font-weight: 200;
+  color: #999;
+}
+/* CSS */
+
+$base-color: #FF0000;
+$secondary_color: #F9F9F9;
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.step-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  background-color: #F9F9F9;
+  transition: .4s;
+  pointer-events: none;
+}
+
+.step-button[aria-expanded="true"] {
+  width: 45px;
+  height: 45px;
+  background-color: $base-color;
+  color: #fff;
+}
+
+.done {
+  background-color: $base-color;
+  color: #fff;
+}
+
+.step-item {
+  z-index: 10;
+  text-align: center;
+}
+
+#progress {
+  -webkit-appearance:none;
+  position: absolute;
+  width: 90%;
+  z-index: 5;
+  height: 10px;
+  margin-left: 18px;
+  /*margin-bottom: 18px; */
+}
+
+/* to customize progress bar */
+#progress::-webkit-progress-value {
+  background-color: $base-color;
+  transition: .5s ease;
+}
+
+#progress::-webkit-progress-bar {
+  background-color: $secondary_color;
+
+}
+
+.proceed-label {
+  padding: unset!important;
+  padding-left: 20px!important;
+}
+.custom-label-register {
+  pointer-events: all!important;
+}
+.table-fixed tbody {
+  height: 200px;
+  overflow-y: auto;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+  float: left;
+  position: relative;
+  width: calc(100% / 3);
+  padding: 8px;
+}
+
+.table-fixed thead > tr > th:first-child,
+.table-fixed tbody td:first-child {
+  width: calc(100% / 3 + 1px);
+}
+.card-body section table tbody tr td {
+  height: 60px;
+  vertical-align: middle;
+}
+.table td {
+  height: 50px;
+  vertical-align: middle;
+}
+table.table thead th {
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+
+.icon-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.icon-list li {
+  margin-bottom: 10px;
+}
+
+.icon-list li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.icon-list li i {
+  margin-right: 10px;
+  font-size: 40px;
+}
+.icon-list-li {
+  margin-left: 20px;
+}
+.state-button {
+  pointer-events: none;
+}
+.measure-image {
+  max-height: 200px;
+  max-width: 250px;
+}
+.log-out-custom-label {
+  float: right;
+  margin: 0 auto;
+}
+body#auth-layout {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 70%; /* Verschiebung des Bildes nach links */
+  height: 100%;
+  
+}
+.dashboard-icons-text
+{
+  text-decoration: none;
+  font-size: 15px;
+}
+.campaign-preview-image {
+  max-height: 200px;
+  width: 100%;
+}
+button.delete-image-btn {
+  background-color: transparent !important;
+  border-color: transparent;
+  color: red !important;
+  padding: 1px;
+}
