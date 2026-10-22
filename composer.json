@@ -14,7 +14,6 @@
         "digitalbynature/s_cockpit_connector": "^2.0",
         "digitalbynature/smm-pdb-sdk": "dev-master",
         "diglactic/laravel-breadcrumbs": "^6.0",
-        "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jenssegers/agent": "^2.6",
         "lab404/laravel-impersonate": "^1.7",
