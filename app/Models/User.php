@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as AuthenticatableUser;
@@ -37,26 +38,17 @@ class User extends AuthenticatableUser
      */
     protected $hidden = ['api_token'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function customer()
+    public function customer(): HasOne
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
 
-    /**
-     * @return mixed
-     */
-    public function userCategories()
+    public function userCategories(): HasOne
     {
         return $this->hasOne(UserCategories::class, 'id', 'categorie_id');
     }
 
-    /**
-     * @param  string  $search
-     */
-    public function scopeCustomSearch(Builder $query, $search)
+    public function scopeCustomSearch(Builder $query, string $search)
     {
         $query
             ->where('id', 'LIKE', '%'.$search.'%')

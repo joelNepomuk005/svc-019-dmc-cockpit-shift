@@ -33,7 +33,7 @@ class sendmail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {
         return $this->view('auth.mails.release_user')->from(env('MAIL_FROM_ADDRESS'))->subject($this->subject)->with('body', $this->content, $this->user);
     }

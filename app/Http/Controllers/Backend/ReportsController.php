@@ -28,6 +28,8 @@ use App\Models\Product;
 use App\Models\ProductCategories;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,7 +39,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ReportsController extends Controller
 {
-    public function importProjects(Request $request)
+    public function importProjects(Request $request): RedirectResponse
     {
 
         $payload = $request->validate([
@@ -56,7 +58,7 @@ class ReportsController extends Controller
         return redirect()->route('backend.projects.index');
     }
 
-    public function balance_customer(Request $request)
+    public function balance_customer(Request $request): JsonResponse
     {
         $payload = $request->validate([
             'file' => 'file|mimes:xlsx',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -44,10 +45,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function scockpit_auth(Request $request)
+    public function scockpit_auth(Request $request): RedirectResponse
     {
 
         if (! $request->has('code')) {
@@ -114,7 +112,7 @@ class LoginController extends Controller
 
     }
 
-    public function authenticated(Request $request, $user)
+    public function authenticated(Request $request, $user): RedirectResponse
     {
 
         if (is_null($user->verified_at)) {

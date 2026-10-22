@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CampaignParticipants extends Model
 {
@@ -19,12 +20,12 @@ class CampaignParticipants extends Model
         'end_date' => 'date',
     ];
 
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function campaign()
+    public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
     }

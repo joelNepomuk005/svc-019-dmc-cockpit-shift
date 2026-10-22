@@ -10,10 +10,8 @@ class TestdataContactType extends Seeder
 {
     /**
      * Auto generated seed file
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         ContactType::create([
             'name' => 'E-Mail',

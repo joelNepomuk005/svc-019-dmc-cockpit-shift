@@ -8,11 +8,13 @@ use App\Models\Customer;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
@@ -29,34 +31,34 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    public function check_blz(Request $request)
+    public function check_blz(Request $request): View
     {
         return view('auth.register.index');
 
     }
 
-    public function verification_success(Request $request)
+    public function verification_success(Request $request): View
     {
 
         return view('auth.register.verification_success');
 
     }
 
-    public function reset_password_success(Request $request)
+    public function reset_password_success(Request $request): View
     {
 
         return view('auth.register.reset_password_success');
 
     }
 
-    public function verification(Request $request)
+    public function verification(Request $request): View
     {
 
         return view('auth.register.verification_email');
 
     }
 
-    public function verification_failed(Request $request)
+    public function verification_failed(Request $request): View
     {
 
         return view('auth.register.create', ['blz' => $request['blz']]);
@@ -82,10 +84,8 @@ class RegisterController extends Controller
 
     /**
      * Get a validator for an incoming registration request.
-     *
-     * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
 
         return Validator::make($data, [
@@ -141,7 +141,7 @@ class RegisterController extends Controller
 
     }
 
-    public function register_user(Request $request)
+    public function register_user(Request $request): RedirectResponse
     {
 
         $request['name'] = $request['first_name'].' '.$request['last_name'];

@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -31,22 +33,19 @@ class CustomerContact extends Model
         'contact_type_id' => 'integer',
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function contact_type()
+    public function contact_type(): HasOne
     {
 
         return $this->hasOne(ContactType::class, 'id', 'contact_type_id');
 
     }
 
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }

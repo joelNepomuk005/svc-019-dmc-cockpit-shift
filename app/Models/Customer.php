@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -42,10 +45,7 @@ class Customer extends Model
         $query->where('bic', '=', $bic);
     }
 
-    /**
-     * @param  string  $search
-     */
-    public function scopeCustomSearch(Builder $query, $search)
+    public function scopeCustomSearch(Builder $query, string $search)
     {
         $query
             ->where('name', 'LIKE', '%'.$search.'%')
@@ -53,38 +53,32 @@ class Customer extends Model
             ->orWhere('bic', 'LIKE', '%'.$search.'%');
     }
 
-    public function users()
+    public function users(): HasMany
     {
         return $this->hasMany(User::class, 'customer_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function contacts()
+    public function contacts(): HasMany
     {
         return $this->hasMany(CustomerContact::class, 'customer_id', 'id')->orderBy('created_at', 'DESC');
     }
 
-    public function association()
+    public function association(): HasOne
     {
         return $this->hasOne(CustomerAssociation::class, 'id', 'association_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function files()
+    public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
     }
 
-    public function measures()
+    public function measures(): HasMany
     {
         return $this->hasMany(CustomerMeasures::class, 'customer_id');
     }
 
-    public function budgets()
+    public function budgets(): HasMany
     {
         return $this->hasMany(CustomerBudget::class, 'customer_id');
     }

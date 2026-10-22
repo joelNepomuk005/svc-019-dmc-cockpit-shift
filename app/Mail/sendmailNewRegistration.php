@@ -32,7 +32,7 @@ class sendmailNewRegistration extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {
         return $this->view('auth.mails.new_user')->from(env('MAIL_FROM_ADDRESS'))->subject($this->subject)->with('body', $this->content);
     }

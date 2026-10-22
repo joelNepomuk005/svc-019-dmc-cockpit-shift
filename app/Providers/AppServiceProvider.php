@@ -9,10 +9,8 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         if (in_array(\Request::ip(), ['127.0.0.1', '80.154.74.243'])) {
             config(['app.debug' => true]);
@@ -21,10 +19,8 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         error_reporting(0);
 

@@ -8,8 +8,10 @@ use App\Models\CustomerContact;
 use App\Models\CustomerMeasures;
 use App\Models\Measures;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -25,7 +27,7 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $perPage = request('per_page', 5);
 
@@ -116,7 +118,7 @@ class DashboardController extends Controller
         return view('backend.dashboard.show', compact('customers', 'measures', 'roles', 'customerContacts', 'chartData'));
     }
 
-    public function getContacts(Request $request)
+    public function getContacts(Request $request): JsonResponse
     {
 
         $perPage = $request->numberOfItems;
@@ -137,7 +139,7 @@ class DashboardController extends Controller
         return response()->json($customerContacts);
     }
 
-    public function getMeasures(Request $request)
+    public function getMeasures(Request $request): JsonResponse
     {
 
         $perPage = $request->numberOfItems;

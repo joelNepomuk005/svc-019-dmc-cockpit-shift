@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,7 +17,7 @@ class DownloadController extends Controller
         );
     }
 
-    public function destroy(Request $request, File $file)
+    public function destroy(Request $request, File $file): JsonResponse
     {
         try {
             $file->delete();

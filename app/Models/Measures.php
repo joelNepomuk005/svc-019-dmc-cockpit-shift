@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Variables;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -24,7 +25,7 @@ class Measures extends Model
         'to' => 'date',
     ];
 
-    public function customerMeasures()
+    public function customerMeasures(): HasMany
     {
         return $this->hasMany(CustomerMeasures::class, 'measure_id');
     }
@@ -49,12 +50,12 @@ class Measures extends Model
         return CustomerMeasures::where('measure_id', $this->id)->where('customer_id', $customer_id)->first();
     }
 
-    public function customerIncentivization()
+    public function customerIncentivization(): HasMany
     {
         return $this->hasMany(CustomerMeasures::class, 'measure_id')->where('incentivization', 1);
     }
 
-    public function customerCoupons()
+    public function customerCoupons(): HasMany
     {
         return $this->hasMany(CustomerMeasures::class, 'measure_id')->where('coupon', 1);
     }

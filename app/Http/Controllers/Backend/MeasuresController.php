@@ -10,15 +10,18 @@ use App\Models\CustomerMeasures;
 use App\Models\File;
 use App\Models\Measures;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class MeasuresController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $filter = new \Illuminate\Http\Request(
@@ -50,7 +53,7 @@ class MeasuresController extends Controller
         return view('backend.measures.overview', compact('measures', 'activeMeasures', 'inactiveMeasures'));
     }
 
-    public function show(Request $request, Measures $measure)
+    public function show(Request $request, Measures $measure): View
     {
 
         return view('backend.measures.show', compact('measure'));
@@ -84,7 +87,7 @@ class MeasuresController extends Controller
 
     }
 
-    public function edit(Request $request, Measures $measure, $tab = null)
+    public function edit(Request $request, Measures $measure, $tab = null): View
     {
         $customerMeasures = $measure->customerMeasures()->paginate(25);
 
@@ -105,7 +108,7 @@ class MeasuresController extends Controller
         return view('backend.measures.edit', compact('measure', 'customerMeasures', 'customers', 'tab'));
     }
 
-    public function tabFilterIndex(Request $request, Measures $measure)
+    public function tabFilterIndex(Request $request, Measures $measure): View
     {
 
         $filter = new \Illuminate\Http\Request(
@@ -194,7 +197,7 @@ class MeasuresController extends Controller
         return $response;
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -235,7 +238,7 @@ class MeasuresController extends Controller
 
     }
 
-    public function update(Request $request, Measures $measure)
+    public function update(Request $request, Measures $measure): RedirectResponse
     {
         $payload = $request->validate([
             'promotion_package' => 'nullable',
@@ -331,7 +334,7 @@ class MeasuresController extends Controller
         return redirect()->route('backend.measures.index');
     }
 
-    public function updateOnCustomer(Request $request, Customer $customer, Measures $measure)
+    public function updateOnCustomer(Request $request, Customer $customer, Measures $measure): JsonResponse
     {
 
         $payload = $request->validate([
@@ -397,7 +400,7 @@ class MeasuresController extends Controller
         ]);
     }
 
-    public function showMeasure(Measures $measure)
+    public function showMeasure(Measures $measure): View
     {
 
         $customer = Customer::find(Auth::user()->customer->id);

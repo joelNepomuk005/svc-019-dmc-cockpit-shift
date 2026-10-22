@@ -19,13 +19,9 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->registerPolicies();
-
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
                 ->subject('SV SternTaler – E-Mail-Adressbestätigung')

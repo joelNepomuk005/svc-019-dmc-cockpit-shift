@@ -34,10 +34,8 @@ class SyncInstitutes extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $client = new PortalAPIClient(config('s_cockpit.portal-api.token'), config('s_cockpit.oauth.api_url'));
 

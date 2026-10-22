@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\CustomerBudget;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,7 +39,7 @@ class BudgetController extends Controller
 
     }
 
-    public function storeCustomer(Request $request, Customer $customer, $type)
+    public function storeCustomer(Request $request, Customer $customer, $type): JsonResponse
     {
         $payload = $request->validate([
             'amount' => 'required',
@@ -62,7 +63,7 @@ class BudgetController extends Controller
 
     }
 
-    public function updateCustomer(Request $request, Customer $customer, CustomerBudget $budget, $type)
+    public function updateCustomer(Request $request, Customer $customer, CustomerBudget $budget, $type): JsonResponse
     {
         $payload = $request->validate([
             'amount' => 'required',
@@ -99,7 +100,7 @@ class BudgetController extends Controller
 
     }
 
-    public function destroy(Request $request, Customer $customer, CustomerBudget $budget)
+    public function destroy(Request $request, Customer $customer, CustomerBudget $budget): JsonResponse
     {
         $budget->delete();
 

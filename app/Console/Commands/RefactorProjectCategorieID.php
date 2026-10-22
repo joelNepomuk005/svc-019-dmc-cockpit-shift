@@ -34,10 +34,8 @@ class RefactorProjectCategorieID extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $projects = CustomerProject::whereBetween('product_categorie', [1, 15])->get();
 
