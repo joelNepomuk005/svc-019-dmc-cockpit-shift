@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Enums\Variables;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,12 +24,12 @@ class CustomerMeasures extends Model
 
     protected $appends = ['BadgeInformation'];
 
-    public function customer()
+    public function customer(): HasOne
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
 
-    public function measure()
+    public function measure(): HasOne
     {
         return $this->hasOne(Measures::class, 'id', 'measure_id');
     }

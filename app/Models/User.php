@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,7 +41,7 @@ class User extends AuthenticatableUser
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function customer()
+    public function customer(): HasOne
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
@@ -48,7 +49,7 @@ class User extends AuthenticatableUser
     /**
      * @return mixed
      */
-    public function userCategories()
+    public function userCategories(): HasOne
     {
         return $this->hasOne(UserCategories::class, 'id', 'categorie_id');
     }

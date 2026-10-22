@@ -37,7 +37,7 @@ class SetMeasuresToDone extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $customerMeasures = CustomerMeasures::where('to', '<=', Carbon::now())->get();
 

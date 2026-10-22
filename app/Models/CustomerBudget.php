@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,12 +18,12 @@ class CustomerBudget extends Model
 
     protected static $logAttributes = ['*'];
 
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function measure()
+    public function measure(): HasOne
     {
         return $this->hasOne(Measures::class, 'id', 'measure_id');
     }

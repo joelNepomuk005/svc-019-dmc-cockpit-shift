@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::table('campaigns', function (Blueprint $table) {
             $table->string('uuid')->after('id')->nullable();
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::table('campaigns', function (Blueprint $table) {
             $table->dropColumn('uuid');
